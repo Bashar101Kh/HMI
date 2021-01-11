@@ -5,9 +5,9 @@ package hmi;
  * 1. Command Lines -- DONE:
  *    - Nötige Command Lines für Testprogramm festlegen und Funktionalität definieren
  *
- * 2. Console aufbauen
+ * 2. Console_Chat aufbauen
  *    - Consolen Input auslesen und in Message Format (JSON & Byte[]) wandeln
- *    - Console Output
+ *    - Console_Chat Output
  *
  * 3. JSON & Byte[] als byte[] data verpacken (JSON Objekt umwandeln & Byte[] "anhängen", Klasse Data: Byte[])
  *
@@ -23,7 +23,7 @@ import java.util.Arrays;
 
 public class Main{
     public static void main(String[] args) {
-
-
+        Console_Chat cc = new Console_Chat();
+        cc.start();
     }
 }
