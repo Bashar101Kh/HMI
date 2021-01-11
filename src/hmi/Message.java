@@ -1,9 +1,11 @@
 package hmi;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import org.json.*;
+import java.util.UUID;
 
 
 public class Message {
@@ -22,16 +24,19 @@ public class Message {
 
     private byte[] content;
 
+    HMI_utilities hmiUtils = new HMI_utilities();
+
     public Message(){
-        msgUuid ="0";
+
+        msgUuid = hmiUtils.generateUUID();
         senderID="Test_sender";
         receiverID="Test_receiver";
         timestamp= new Date();
         SimpleDateFormat ft =
                 new SimpleDateFormat("E dd.MM.yyyy 'at' hh:mm:ss a zzz");
-        datatype="utf_8/text";
+            datatype="utf_8/text";
         dataLenByte=0;
-        content="Sample Text".getBytes(StandardCharsets.UTF_8);
+            content="Sample Text".getBytes(StandardCharsets.UTF_8);
     }
 
 
@@ -91,30 +96,22 @@ public class Message {
         this.content = content;
     }
 
-
     //   public Message sendMessage(String message){
 
     //       Message theMessage = new Message();
-
 
     //   return theMessage;
     //   }
 
     //   public String print(Message message){
 
-
     //   }
 
     //  public void send(Message message){
 
-
     //  }
 
-
-
-
-
-    public byte[] jsonConvertToByte(JSONObject jObject){
+    public byte[] convertJSONToByte(JSONObject jObject){
 
         byte[] byteArray;
         HMI_utilities hmiUtil = new HMI_utilities();
@@ -124,19 +121,33 @@ public class Message {
         return byteArray;
     }
 
+    public JSONObject createJSONfromMessage(Message message){
+
+        JSONObject jObject = new JSONObject();
+
+        jObject.put("msgUuid",message.msgUuid);
+        jObject.put("senderID",message.senderID);
+        jObject.put("receiverID",message.receiverID);
+        jObject.put("timestamp",message.timestamp);
+        jObject.put("datatype",message.datatype);
+        jObject.put("dataTypeLen",message.dataLenByte);
+
+        convertJSONToByte(jObject);
+
+        return jObject;
+    }
+
     public void testJSON(){
 
         byte[] receivedByteArray;
         HMI_utilities hmiUtil = new HMI_utilities();
+        Message message = new Message();
 
-        JSONObject jObject = new JSONObject();
-        jObject.put("key1","theKey1");
-        jObject.put("key2","theKey2");
 
-        receivedByteArray = jsonConvertToByte(jObject);
+        System.out.println(hmiUtil.BinToString(message.convertJSONToByte(message.createJSONfromMessage(message))));
 
-        System.out.println(hmiUtil.BinToString(receivedByteArray));
     }
-
 }
+
+
 
