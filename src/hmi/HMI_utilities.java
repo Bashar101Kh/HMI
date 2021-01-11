@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class HMI_utilities {
 
-    public static byte[] StringToBin(String inputString){
+    public byte[] StringToBin(String inputString){
 
         Charset charset = StandardCharsets.UTF_8;
         byte[] byteArray = inputString.getBytes(charset);
@@ -16,7 +16,7 @@ public class HMI_utilities {
         return byteArray;
     }
 
-    public static String BinToString(byte[] byteArray) {
+    public String BinToString(byte[] byteArray) {
 
         Charset charset = StandardCharsets.UTF_8;
         String string = charset.decode(ByteBuffer.wrap(byteArray))
@@ -26,7 +26,7 @@ public class HMI_utilities {
     }
 
 
-    public static UUID generateUUID(){
+    public UUID generateUUID(){
         UUID uuid = UUID.randomUUID();
         //System.out.println("generierte UUID = " + uuid.toString());
         return uuid;
