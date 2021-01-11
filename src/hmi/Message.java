@@ -34,9 +34,9 @@ public class Message {
         timestamp= new Date();
         SimpleDateFormat ft =
                 new SimpleDateFormat("E dd.MM.yyyy 'at' hh:mm:ss a zzz");
-            datatype="utf_8/text";
-        dataLenByte=0;
-            content="Sample Text".getBytes(StandardCharsets.UTF_8);
+        datatype="utf_8/text";
+        content="Sample Text".getBytes(StandardCharsets.UTF_8);
+        dataLenByte=content.length;
     }
 
 
@@ -115,23 +115,21 @@ public class Message {
 
         byte[] byteArray;
         HMI_utilities hmiUtil = new HMI_utilities();
-
         byteArray = hmiUtil.StringToBin(jObject.toString());
-
         return byteArray;
     }
 
     public JSONObject createJSONfromMessage(Message message){
 
         JSONObject jObject = new JSONObject();
-
         jObject.put("msgUuid",message.msgUuid);
         jObject.put("senderID",message.senderID);
         jObject.put("receiverID",message.receiverID);
         jObject.put("timestamp",message.timestamp);
         jObject.put("datatype",message.datatype);
         jObject.put("dataTypeLen",message.dataLenByte);
-
+//      Content for testing
+//      jObject.put("content",message.content);
         convertJSONToByte(jObject);
 
         return jObject;
@@ -141,10 +139,7 @@ public class Message {
 
         byte[] receivedByteArray;
         HMI_utilities hmiUtil = new HMI_utilities();
-        Message message = new Message();
-
-
-        System.out.println(hmiUtil.BinToString(message.convertJSONToByte(message.createJSONfromMessage(message))));
+        System.out.println(hmiUtil.BinToString(convertJSONToByte(createJSONfromMessage(this))));
 
     }
 }
