@@ -1,4 +1,4 @@
-package com.company;
+package hmi;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;

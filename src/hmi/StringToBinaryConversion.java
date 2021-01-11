@@ -1,4 +1,4 @@
-package com.company;
+package hmi;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
