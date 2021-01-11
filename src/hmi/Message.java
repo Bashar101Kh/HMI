@@ -1,6 +1,7 @@
 package hmi;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import org.json.*;
@@ -91,28 +92,20 @@ public class Message {
         this.content = content;
     }
 
-
     //   public Message sendMessage(String message){
 
     //       Message theMessage = new Message();
-
 
     //   return theMessage;
     //   }
 
     //   public String print(Message message){
 
-
     //   }
 
     //  public void send(Message message){
 
-
     //  }
-
-
-
-
 
     public byte[] jsonConvertToByte(JSONObject jObject){
 
@@ -124,19 +117,12 @@ public class Message {
         return byteArray;
     }
 
-    public void testJSON(){
-
-        byte[] receivedByteArray;
-        HMI_utilities hmiUtil = new HMI_utilities();
+    public void createJSON(Message message){
 
         JSONObject jObject = new JSONObject();
-        jObject.put("key1","theKey1");
-        jObject.put("key2","theKey2");
 
-        receivedByteArray = jsonConvertToByte(jObject);
 
-        System.out.println(hmiUtil.BinToString(receivedByteArray));
     }
-
 }
+
 
