@@ -5,9 +5,9 @@ package hmi;
  * 1. Command Lines -- DONE:
  *    - Nötige Command Lines für Testprogramm festlegen und Funktionalität definieren
  *
- * 2. Console_Chat aufbauen
+ * 2. Console aufbauen
  *    - Consolen Input auslesen und in Message Format (JSON & Byte[]) wandeln
- *    - Console_Chat Output
+ *    - Console Output
  *
  * 3. JSON & Byte[] als byte[] data verpacken (JSON Objekt umwandeln & Byte[] "anhängen", Klasse Data: Byte[])
  *

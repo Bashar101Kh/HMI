@@ -3,6 +3,7 @@ package hmi;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 
 public class HMI_utilities {
@@ -24,4 +25,13 @@ public class HMI_utilities {
         return string;
     }
 
+
+    public static UUID generateUUID(){
+        UUID uuid = UUID.randomUUID();
+        //System.out.println("generierte UUID = " + uuid.toString());
+        return uuid;
+    }
+
+
 }
+
