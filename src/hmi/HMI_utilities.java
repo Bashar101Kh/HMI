@@ -26,10 +26,11 @@ public class HMI_utilities {
     }
 
 
-    public UUID generateUUID(){
+    public String generateUUID(){
+        String uuidString;
         UUID uuid = UUID.randomUUID();
-        //System.out.println("generierte UUID = " + uuid.toString());
-        return uuid;
+        uuidString = uuid.toString();
+        return uuidString;
     }
 
 
