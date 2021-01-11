@@ -107,7 +107,7 @@ public class Message {
 
     //  }
 
-    public byte[] jsonConvertToByte(JSONObject jObject){
+    public byte[] convertJSONToByte(JSONObject jObject){
 
         byte[] byteArray;
         HMI_utilities hmiUtil = new HMI_utilities();
@@ -117,12 +117,29 @@ public class Message {
         return byteArray;
     }
 
-    public void createJSON(Message message){
+    public JSONObject createJSONfromMessage(Message message){
 
         JSONObject jObject = new JSONObject();
 
+        jObject.put("datatype",message.datatype);
+
+        convertJSONToByte(jObject);
+
+        return jObject;
+    }
+
+    public void testJSON(JSONObject jObject){
+
+        byte[] receivedByteArray;
+        HMI_utilities hmiUtil = new HMI_utilities();
+
+        jObject.put("key1","theKey1");
+        jObject.put("key2","theKey2");
+
+        receivedByteArray = convertJSONToByte(jObject);
 
     }
 }
+
 
 
