@@ -5,7 +5,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 
-public class StringToBinaryConversion {
+public class HMI_utilities {
 
     public static byte[] StringToBin(String inputString){
 
