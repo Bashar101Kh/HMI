@@ -33,7 +33,13 @@ public class ComMessage {
 
     //TODO
     //Constructor
-    public ComMessage() {
+    public ComMessage(JSONObject header, byte[] data) {
 
     }
 }
+
+
+/***
+ * call
+ * ComMessage comMessage = new ComMessage(sendMessage.getHeader(),sendMessage.getContent());
+ ***/

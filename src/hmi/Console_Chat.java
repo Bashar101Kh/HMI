@@ -42,6 +42,7 @@ public class Console_Chat {
                 // -m [userName] [Message]
                 // -user -[userName]
                 if(len >= cmds[0].length() ? input.substring(0,cmds[0].length()).equals(cmds[0]) : false){
+                    clearScreen();
                     System.out.println("The following commands are available:" +
                             "\n-help : list all commands" +
                             "\n-user : list all available contacts" +
@@ -59,9 +60,12 @@ public class Console_Chat {
 
                     //jo851hil TODO argMsg an Message Contructor übergeben
                     //jo851hil TODO tbd wie ReceiverID übernommen wird, diese müsste zuerst vom Storage bezogen werden
-                    if(argMsg!="") {
+                    if(argMsg != "") {
                         sendMessage = new Message(argUser,argMsg);
                         Message.createJSONFromMessage(sendMessage);
+
+                    //jo851hil TODO umwandeln von header und data in in byte[] und übergabe an comMessage constructor, zusätzlich comMessage header generieren
+
                     }
 
                     //send /view history
