@@ -26,12 +26,12 @@ import java.util.Arrays;
 public class Main{
     public static void main(String[] args) {
         Console_Chat cc = new Console_Chat();
-        cc.start();
+        //cc.start();
 
         /**
         //FOR TESTING
         Message message = new Message();
-        //message.testJSON();
+        message.testJSON();
         Message createdmessage = new Message();
         JSONObject jsonObject = new JSONObject();
         JSONObject editedjsonObject1 = new JSONObject();
@@ -39,9 +39,9 @@ public class Main{
         editedjsonObject1 = message.createJSONFromMessage(message);
         message.editJSONKey(editedjsonObject1);
         createdmessage.createMessageFromJSON(editedjsonObject1);
-        //message.testMessage(message1);
+        message.testMessage(createdmessage);
 
         System.out.println(message.hmiUtils.BinToString(message.messageToByteArray(jsonObject,createdmessage)));
-        **/
+        */
     }
 }

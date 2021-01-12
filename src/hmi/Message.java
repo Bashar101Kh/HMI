@@ -9,24 +9,19 @@ import org.json.*;
 
 public class Message {
 
+
     private String msgUuid;
-
     private String senderID;
-
     private String receiverID;
-
     private Date timestamp;
-
     private String strDate;
-
     private String dataType;
-
     private int dataLenByte;
-
     private byte[] content;
 
     HMI_utilities hmiUtils = new HMI_utilities();
 
+    //Constructor
     public Message(){
 
         msgUuid = hmiUtils.generateUUID();
@@ -45,29 +40,22 @@ public class Message {
     public String getMsgUuid(){
         return msgUuid;
     }
-
     public String getSenderID(){
         return senderID;
     }
-
     public String getReceiverID(){
         return receiverID;
     }
-
     public Date getTimestamp(){
         return timestamp;
     }
-
     public String getStrDate() {return strDate; };
-
     public String getDataType(){
         return dataType;
     }
-
     public int getDataLenByte(){
         return dataLenByte;
     }
-
     public byte[] getContent(){
         return content;
     }
@@ -75,29 +63,22 @@ public class Message {
     public void setMsgUuid(String msgUuid) {
         this.msgUuid = msgUuid;
     }
-
     public void setSenderID(String senderID) {
         this.senderID = senderID;
     }
-
     public void setReceiverID(String receiverID) {
         this.receiverID = receiverID;
     }
-
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
-
     public void setStrDate(String strDate) { this.strDate = strDate; }
-
     public void setDataType(String dataType) {
         this.dataType = dataType;
     }
-
     public void setDataLenByte(int dataLenByte) {
         this.dataLenByte = dataLenByte;
     }
-
     public void setContent(byte[] content){
         this.content = content;
     }
@@ -127,15 +108,16 @@ public class Message {
 
     public JSONObject createJSONFromMessage(Message message){
 
-        JSONObject jObject = new JSONObject();
-        jObject.put("msgUuid",message.msgUuid);
-        jObject.put("senderID",message.senderID);
-        jObject.put("receiverID",message.receiverID);
-        jObject.put("timestamp",message.strDate);
-        jObject.put("datatype",message.dataType);
-        jObject.put("dataLenByte",message.dataLenByte);
+        JSONObject jsonObject = new JSONObject();
 
-        return jObject;
+        jsonObject.put("msgUuid",message.msgUuid);
+        jsonObject.put("senderID",message.senderID);
+        jsonObject.put("receiverID",message.receiverID);
+        jsonObject.put("timestamp",message.strDate);
+        jsonObject.put("datatype",message.dataType);
+        jsonObject.put("dataLenByte",message.dataLenByte);
+
+        return jsonObject;
     }
 
     public void createMessageFromJSON(JSONObject jsonObject){
@@ -146,7 +128,6 @@ public class Message {
         this.strDate = jsonObject.getString("timestamp");
         this.dataType = jsonObject.getString("datatype");
         this.dataLenByte = jsonObject.getInt("dataLenByte");
-
     }
 
     public byte[] messageToByteArray(JSONObject jsonObject, Message message){
@@ -161,7 +142,6 @@ public class Message {
         ByteBuffer buff = ByteBuffer.wrap(combinedByteArray);
         buff.put(json_data);
         buff.put(message_data);
-
         byte[] data = buff.array();
 
         return data;
