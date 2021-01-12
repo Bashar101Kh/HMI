@@ -42,7 +42,6 @@ public class Console_Chat {
                 // -m [userName] [Message]
                 // -user -[userName]
                 if(len >= cmds[0].length() ? input.substring(0,cmds[0].length()).equals(cmds[0]) : false){
-                    clearScreen();
                     System.out.println("The following commands are available:" +
                             "\n-help : list all commands" +
                             "\n-user : list all available contacts" +
@@ -63,8 +62,6 @@ public class Console_Chat {
                     if(argMsg!="") {
                         sendMessage = new Message(argUser,argMsg);
                         Message.createJSONFromMessage(sendMessage);
-
-
                     }
 
                     //send /view history
