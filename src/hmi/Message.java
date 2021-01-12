@@ -18,7 +18,7 @@ public class Message {
     private String dataType;
     private int dataLenByte;
 
-    private JSONObject Header;
+    private JSONObject header;
 
     private String plainTextContent;
     private byte[] content;
@@ -78,6 +78,7 @@ public class Message {
         return dataLenByte;
     }
     public String getPlainTextContent() {return plainTextContent;}
+    public JSONObject getHeader() {return header;}
     public byte[] getContent(){
         return content;
     }
@@ -102,6 +103,7 @@ public class Message {
         this.dataLenByte = dataLenByte;
     }
     public void setPlainTextContent(String plainTextContent) {this.plainTextContent = plainTextContent;}
+    public void setHeader(JSONObject header){this.header = header;}
     public void setContent(byte[] content){
         this.content = content;
     }
@@ -129,18 +131,14 @@ public class Message {
         return byteArray;
     }
 
-    public JSONObject createJSONFromMessage(Message message){
+    public static void createJSONFromMessage(Message message){
 
-        JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("msgUuid",message.msgUuid);
-        jsonObject.put("senderID",message.senderID);
-        jsonObject.put("receiverID",message.receiverID);
-        jsonObject.put("timestamp",message.strDate);
-        jsonObject.put("datatype",message.dataType);
-        jsonObject.put("dataLenByte",message.dataLenByte);
-
-        return jsonObject;
+        message.header.put("msgUuid",message.msgUuid);
+        message.header.put("senderID",message.senderID);
+        message.header.put("receiverID",message.receiverID);
+        message.header.put("timestamp",message.strDate);
+        message.header.put("datatype",message.dataType);
+        message.header.put("dataLenByte",message.dataLenByte);
     }
 
     public void createMessageFromJSON(JSONObject jsonObject){
@@ -178,7 +176,6 @@ public class Message {
 
         byte[] receivedByteArray;
         HMI_utilities hmiUtil = new HMI_utilities();
-        System.out.println(hmiUtil.BinToString(convertJSONToByte(createJSONFromMessage(this))));
     }
 
     public void testMessage(Message message){
