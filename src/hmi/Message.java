@@ -1,12 +1,11 @@
 package hmi;
 
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 import org.json.*;
-import java.util.UUID;
-
 
 public class Message {
 
@@ -18,7 +17,9 @@ public class Message {
 
     private Date timestamp;
 
-    private String datatype;
+    private String strDate;
+
+    private String dataType;
 
     private int dataLenByte;
 
@@ -29,19 +30,19 @@ public class Message {
     public Message(){
 
         msgUuid = hmiUtils.generateUUID();
-        senderID="Test_sender";
-        receiverID="Test_receiver";
-        timestamp= new Date();
-        SimpleDateFormat ft =
-                new SimpleDateFormat("E dd.MM.yyyy 'at' hh:mm:ss a zzz");
-        datatype="utf_8/text";
-        content="Sample Text".getBytes(StandardCharsets.UTF_8);
+        senderID = "Test_sender";
+        receiverID = "Test_receiver";
+        timestamp = new Date();
+        String pattern = "E dd.mm.yyyy HH:mm:ss.SSSZ";
+        SimpleDateFormat simpleDateFormat =
+                new SimpleDateFormat(pattern, new Locale("de", "DE"));
+        strDate = simpleDateFormat.format(new Date());
+        dataType = "utf_8/text";
+        content = "Sample Text".getBytes(StandardCharsets.UTF_8);
         dataLenByte=content.length;
     }
 
-
-
-    public String getUUID(){
+    public String getMsgUuid(){
         return msgUuid;
     }
 
@@ -57,8 +58,10 @@ public class Message {
         return timestamp;
     }
 
-    public String getDatatype(){
-        return datatype;
+    public String getStrDate() {return strDate; };
+
+    public String getDataType(){
+        return dataType;
     }
 
     public int getDataLenByte(){
@@ -84,8 +87,11 @@ public class Message {
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
-    public void setDatatype(String datatype) {
-        this.datatype = datatype;
+
+    public void setStrDate(String strDate) { this.strDate = strDate; }
+
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
     }
 
     public void setDataLenByte(int dataLenByte) {
@@ -119,29 +125,73 @@ public class Message {
         return byteArray;
     }
 
-    public JSONObject createJSONfromMessage(Message message){
+    public JSONObject createJSONFromMessage(Message message){
 
         JSONObject jObject = new JSONObject();
         jObject.put("msgUuid",message.msgUuid);
         jObject.put("senderID",message.senderID);
         jObject.put("receiverID",message.receiverID);
-        jObject.put("timestamp",message.timestamp);
-        jObject.put("datatype",message.datatype);
-        jObject.put("dataTypeLen",message.dataLenByte);
-//      Content for testing
-//      jObject.put("content",message.content);
-        convertJSONToByte(jObject);
+        jObject.put("timestamp",message.strDate);
+        jObject.put("datatype",message.dataType);
+        jObject.put("dataLenByte",message.dataLenByte);
 
         return jObject;
     }
+
+    public void createMessageFromJSON(JSONObject jsonObject){
+
+        this.msgUuid = jsonObject.getString("msgUuid");
+        this.senderID = jsonObject.getString("senderID");
+        this.receiverID = jsonObject.getString("receiverID");
+        this.strDate = jsonObject.getString("timestamp");
+        this.dataType = jsonObject.getString("datatype");
+        this.dataLenByte = jsonObject.getInt("dataLenByte");
+
+    }
+
+    public byte[] messageToByteArray(JSONObject jsonObject, Message message){
+
+        byte[] json_data;
+        byte[] message_data;
+
+        json_data = convertJSONToByte(jsonObject);
+        message_data = message.content;
+
+        byte[] combinedByteArray = new byte[json_data.length + message_data.length];
+        ByteBuffer buff = ByteBuffer.wrap(combinedByteArray);
+        buff.put(json_data);
+        buff.put(message_data);
+
+        byte[] data = buff.array();
+
+        return data;
+    }
+
+    /****************************************************************
+     * FOR TESTING
+     ****************************************************************/
 
     public void testJSON(){
 
         byte[] receivedByteArray;
         HMI_utilities hmiUtil = new HMI_utilities();
-        System.out.println(hmiUtil.BinToString(convertJSONToByte(createJSONfromMessage(this))));
-
+        System.out.println(hmiUtil.BinToString(convertJSONToByte(createJSONFromMessage(this))));
     }
+
+    public void testMessage(Message message){
+
+        System.out.println(message.msgUuid +" "+ message.senderID +" "+ message.receiverID);
+        System.out.println(message.timestamp);
+        System.out.println(message.dataType +" "+ message.dataLenByte);
+    }
+
+    public JSONObject editJSONKey(JSONObject jsonObject){
+
+        jsonObject.put("dataLenByte",10);
+
+        return jsonObject;
+    }
+
 }
 
 

@@ -18,6 +18,8 @@ package hmi;
  *
  ******************************************************************/
 
+import org.json.JSONObject;
+
 import java.lang.String;
 import java.util.Arrays;
 
@@ -25,5 +27,21 @@ public class Main{
     public static void main(String[] args) {
         Console_Chat cc = new Console_Chat();
         cc.start();
+
+        /**
+        //FOR TESTING
+        Message message = new Message();
+        //message.testJSON();
+        Message createdmessage = new Message();
+        JSONObject jsonObject = new JSONObject();
+        JSONObject editedjsonObject1 = new JSONObject();
+        jsonObject = message.createJSONFromMessage(message);
+        editedjsonObject1 = message.createJSONFromMessage(message);
+        message.editJSONKey(editedjsonObject1);
+        createdmessage.createMessageFromJSON(editedjsonObject1);
+        //message.testMessage(message1);
+
+        System.out.println(message.hmiUtils.BinToString(message.messageToByteArray(jsonObject,createdmessage)));
+        **/
     }
 }
