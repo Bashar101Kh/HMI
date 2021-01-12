@@ -23,6 +23,22 @@ public class Message {
     HMI_utilities hmiUtils = new HMI_utilities();
 
     //Constructor
+    public Message(String argUser,String argMsg){
+
+        msgUuid = hmiUtils.generateUUID();
+        senderID = "Test_sender";
+        receiverID = argUser;
+        timestamp = new Date();
+        String pattern = "E dd.mm.yyyy HH:mm:ss.SSSZ";
+        SimpleDateFormat simpleDateFormat =
+                new SimpleDateFormat(pattern, new Locale("de", "DE"));
+        strDate = simpleDateFormat.format(new Date());
+        dataType = "utf_8/text";
+        plainTextContent = argMsg;
+        content = plainTextContent.getBytes(StandardCharsets.UTF_8);
+        dataLenByte=content.length;
+    }
+
     public Message(){
 
         msgUuid = hmiUtils.generateUUID();
@@ -34,7 +50,7 @@ public class Message {
                 new SimpleDateFormat(pattern, new Locale("de", "DE"));
         strDate = simpleDateFormat.format(new Date());
         dataType = "utf_8/text";
-        plainTextContent = "Sample Text";
+        plainTextContent = "";
         content = plainTextContent.getBytes(StandardCharsets.UTF_8);
         dataLenByte=content.length;
     }

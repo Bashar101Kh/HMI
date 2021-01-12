@@ -1,6 +1,7 @@
 package hmi;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class Console_Chat {
@@ -11,10 +12,13 @@ public class Console_Chat {
                                     "-m",
                                     "-exit" };
     private boolean run ;
-    Message message;
+
+    //jo851hil TODO
+    Message sendMessage;
+    Message receiveMessage;
+
     //Constructor
     public Console_Chat(){
-        message = new Message();
 
 
     }
@@ -51,12 +55,12 @@ public class Console_Chat {
                     argUser = cmd_chunks [1];
                     for (int i = 2 ; i < cmd_chunks.length ; i++){
                         argMsg += (i != cmd_chunks.length-1) ? (cmd_chunks[i]+" ") : (cmd_chunks[i]) ;
-
-                        //jo851hil TODO
-                        message.setPlainTextContent(argMsg);
-
                     }
 
+                    //jo851hil TODO argMsg an Message Contructor übergeben
+                    if(argMsg!="") {
+                        sendMessage = new Message(argUser,argMsg);
+                    }
                     //send /view history
                     System.out.println("Message:"+argMsg);
                     System.out.println("User:"+argUser);
