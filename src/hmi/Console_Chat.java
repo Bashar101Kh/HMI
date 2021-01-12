@@ -58,6 +58,7 @@ public class Console_Chat {
                     }
 
                     //jo851hil TODO argMsg an Message Contructor übergeben
+                    //jo851hil TODO tbd wie ReceiverID übernommen wird, diese müsste zuerst vom Storage bezogen werden
                     if(argMsg!="") {
                         sendMessage = new Message(argUser,argMsg);
                     }

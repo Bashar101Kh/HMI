@@ -5,28 +5,24 @@ import org.json.*;
 public class ComMessage {
 
     //Fields
-    private JSONObject jsonObject;
+    private JSONObject header;
     private byte[] data;
 
     //Methods
-    public JSONObject getJsonObject(){
-        return jsonObject;
+    public JSONObject getHeader(){
+        return header;
     }
     public byte[] getData(){
         return data;
     }
 
-    private void setJsonObject(JSONObject jsonObject){
-        this.jsonObject=jsonObject;
+    private void setHeader(JSONObject jsonObject){
+        this.header=jsonObject;
     }
-    private void setData(byte[] data){
-        this.data=data;
-    }
+    private void setData(byte[] data){ this.data=data; }
 
     //TODO
     //Constructor
     public ComMessage() {
-
     }
-
 }
