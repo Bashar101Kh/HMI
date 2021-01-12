@@ -64,7 +64,7 @@ public class Console_Chat {
                         sendMessage = new Message(argUser,argMsg);
                         Message.createJSONFromMessage(sendMessage);
 
-                        ComMessage comMessage = new ComMessage(sendMessage.get);
+
                     }
 
                     //send /view history
