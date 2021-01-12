@@ -52,8 +52,8 @@ public class Console_Chat {
                     for (int i = 2 ; i < cmd_chunks.length ; i++){
                         argMsg += (i != cmd_chunks.length-1) ? (cmd_chunks[i]+" ") : (cmd_chunks[i]) ;
 
-                        //jo851hil
-                        message.setPlaintTextContent(argMsg);
+                        //jo851hil TODO
+                        message.setPlainTextContent(argMsg);
 
                     }
 
