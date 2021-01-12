@@ -4,15 +4,20 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Console_Chat {
+
     //Fields
     private final String[] cmds = { "-help",
                                     "-user",
                                     "-m",
                                     "-exit" };
     private boolean run ;
-
+    Message message;
     //Constructor
+    public Console_Chat(){
+        message = new Message();
 
+
+    }
 
     //Methods
     void start(){
@@ -46,6 +51,10 @@ public class Console_Chat {
                     argUser = cmd_chunks [1];
                     for (int i = 2 ; i < cmd_chunks.length ; i++){
                         argMsg += (i != cmd_chunks.length-1) ? (cmd_chunks[i]+" ") : (cmd_chunks[i]) ;
+
+                        //jo851hil
+                        message.setPlaintTextContent(argMsg);
+
                     }
 
                     //send /view history
