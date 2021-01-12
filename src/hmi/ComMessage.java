@@ -24,5 +24,6 @@ public class ComMessage {
     //TODO
     //Constructor
     public ComMessage() {
+
     }
 }
