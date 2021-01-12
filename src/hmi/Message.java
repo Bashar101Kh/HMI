@@ -40,8 +40,10 @@ public class Message {
         plainTextContent = argMsg;
         content = plainTextContent.getBytes(StandardCharsets.UTF_8);
         dataLenByte=content.length;
+        header = new JSONObject();
     }
 
+    //jo851hil TODO check if necessary
     public Message(){
 
         msgUuid = hmiUtils.generateUUID();
@@ -56,6 +58,7 @@ public class Message {
         plainTextContent = "";
         content = plainTextContent.getBytes(StandardCharsets.UTF_8);
         dataLenByte=content.length;
+        header = new JSONObject();
     }
 
     public String getMsgUuid(){
@@ -70,15 +73,21 @@ public class Message {
     public Date getTimestamp(){
         return timestamp;
     }
-    public String getStrDate() {return strDate; };
+    public String getStrDate() {
+        return strDate;
+    }
     public String getDataType(){
         return dataType;
     }
     public int getDataLenByte(){
         return dataLenByte;
     }
-    public String getPlainTextContent() {return plainTextContent;}
-    public JSONObject getHeader() {return header;}
+    public String getPlainTextContent() {
+        return plainTextContent;
+    }
+    public JSONObject getHeader() {
+        return header;
+    }
     public byte[] getContent(){
         return content;
     }
@@ -95,15 +104,21 @@ public class Message {
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
-    public void setStrDate(String strDate) { this.strDate = strDate; }
+    public void setStrDate(String strDate) {
+        this.strDate = strDate;
+    }
     public void setDataType(String dataType) {
         this.dataType = dataType;
     }
     public void setDataLenByte(int dataLenByte) {
         this.dataLenByte = dataLenByte;
     }
-    public void setPlainTextContent(String plainTextContent) {this.plainTextContent = plainTextContent;}
-    public void setHeader(JSONObject header){this.header = header;}
+    public void setPlainTextContent(String plainTextContent) {
+        this.plainTextContent = plainTextContent;
+    }
+    public void setHeader(JSONObject header){
+        this.header = header;
+    }
     public void setContent(byte[] content){
         this.content = content;
     }

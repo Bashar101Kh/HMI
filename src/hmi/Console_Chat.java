@@ -60,10 +60,11 @@ public class Console_Chat {
 
                     //jo851hil TODO argMsg an Message Contructor übergeben
                     //jo851hil TODO tbd wie ReceiverID übernommen wird, diese müsste zuerst vom Storage bezogen werden
-                    if(argMsg!="") {
+                    if(argMsg != "") {
                         sendMessage = new Message(argUser,argMsg);
                         Message.createJSONFromMessage(sendMessage);
 
+                    //jo851hil TODO umwandeln von header und data in in byte[] und übergabe an comMessage constructor, zusätzlich comMessage header generieren
 
                     }
 
