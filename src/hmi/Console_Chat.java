@@ -61,6 +61,7 @@ public class Console_Chat {
                     if(argMsg!="") {
                         sendMessage = new Message(argUser,argMsg);
                     }
+
                     //send /view history
                     System.out.println("Message:"+argMsg);
                     System.out.println("User:"+argUser);

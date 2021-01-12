@@ -9,7 +9,7 @@ import org.json.*;
 
 public class Message {
 
-
+    //Fields
     private String msgUuid;
     private String senderID;
     private String receiverID;
@@ -22,7 +22,7 @@ public class Message {
 
     HMI_utilities hmiUtils = new HMI_utilities();
 
-    //Constructor
+    //Constructor //TODO Sender ID, dataType,
     public Message(String argUser,String argMsg){
 
         msgUuid = hmiUtils.generateUUID();
