@@ -10,6 +10,7 @@ public class Console_Chat {
     private final String[] cmds = { "-help",
                                     "-user",
                                     "-m",
+                                    "-clear",
                                     "-exit" };
     private boolean run ;
 
@@ -45,9 +46,9 @@ public class Console_Chat {
                     System.out.println("The following commands are available:" +
                             "\n-help : list all commands" +
                             "\n-user : list all available contacts" +
-                            "\n-user UserName : open chat with user" +
-                            "\n-user UserName plainText : send plain text message to user" +
-                            "\n-m plainText : when a user chat is opened with '-user Username' a plainText message is sent" +
+                            "\n-user [UserName] : open chat with user" +
+                            "\n-user [UserName] [plainText] : send plain text message to user" +
+                            "\n-m [plainText] : when a user chat is opened with '-user Username' a plainText message is sent" +
                             "\n-exit : close the program");
                 }else if (len >= cmds[1].length() ? input.substring(0,cmds[1].length()).equals(cmds[1]) : false){
                     System.out.println("-user erkannt");
@@ -72,6 +73,8 @@ public class Console_Chat {
                 }else if (len >= cmds[2].length() ? input.substring(0,cmds[2].length()).equals(cmds[2]): false){
                     System.out.println("-user not implemented jet");
                 }else if (len >= cmds[3].length() ? input.substring(0,cmds[3].length()).equals(cmds[3]): false){
+                    clearScreen();
+                }else if (len >= cmds[4].length() ? input.substring(0,cmds[4].length()).equals(cmds[4]): false){
                     run = false;
                 }else {
                     System.out.println("Default");
@@ -82,6 +85,12 @@ public class Console_Chat {
 
     //TODO
     public static void clearScreen(){
-
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
