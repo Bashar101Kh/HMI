@@ -62,6 +62,9 @@ public class Console_Chat {
                     //jo851hil TODO tbd wie ReceiverID übernommen wird, diese müsste zuerst vom Storage bezogen werden
                     if(argMsg!="") {
                         sendMessage = new Message(argUser,argMsg);
+                        Message.createJSONFromMessage(sendMessage);
+
+                        ComMessage comMessage = new ComMessage(sendMessage.get);
                     }
 
                     //send /view history
