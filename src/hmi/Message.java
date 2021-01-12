@@ -17,7 +17,7 @@ public class Message {
     private String strDate;
     private String dataType;
     private int dataLenByte;
-    private String plaintTextContent;
+    private String plainTextContent;
     private byte[] content;
 
     HMI_utilities hmiUtils = new HMI_utilities();
@@ -34,8 +34,8 @@ public class Message {
                 new SimpleDateFormat(pattern, new Locale("de", "DE"));
         strDate = simpleDateFormat.format(new Date());
         dataType = "utf_8/text";
-        plaintTextContent = "Sample Text";
-        content = plaintTextContent.getBytes(StandardCharsets.UTF_8);
+        plainTextContent = "Sample Text";
+        content = plainTextContent.getBytes(StandardCharsets.UTF_8);
         dataLenByte=content.length;
     }
 
@@ -58,7 +58,7 @@ public class Message {
     public int getDataLenByte(){
         return dataLenByte;
     }
-    public String getPlaintTextContent() {return plaintTextContent;}
+    public String getPlainTextContent() {return plainTextContent;}
     public byte[] getContent(){
         return content;
     }
@@ -82,7 +82,7 @@ public class Message {
     public void setDataLenByte(int dataLenByte) {
         this.dataLenByte = dataLenByte;
     }
-    public void setPlaintTextContent(String plaintTextContent) {this.plaintTextContent = plaintTextContent;}
+    public void setPlainTextContent(String plainTextContent) {this.plainTextContent = plainTextContent;}
     public void setContent(byte[] content){
         this.content = content;
     }
