@@ -17,6 +17,9 @@ public class Message {
     private String strDate;
     private String dataType;
     private int dataLenByte;
+
+    private JSONObject Header;
+
     private String plainTextContent;
     private byte[] content;
 

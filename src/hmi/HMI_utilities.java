@@ -25,14 +25,12 @@ public class HMI_utilities {
         return string;
     }
 
-
     public String generateUUID(){
         String uuidString;
         UUID uuid = UUID.randomUUID();
         uuidString = uuid.toString();
+
         return uuidString;
     }
-
-
 }
 
