@@ -1,5 +1,7 @@
 package hmi;
 
+import org.json.JSONObject;
+
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -32,5 +34,17 @@ public class HMI_utilities {
 
         return uuidString;
     }
+
+    //
+    public Message extractDataIPC(ComMessage comMessage){
+
+        //convert comMessage byte[] data block byte[] content and fill message object
+        Message recMessage = new Message();
+
+        //TODO
+
+        return recMessage;
+    }
+
 }
 

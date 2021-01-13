@@ -36,6 +36,22 @@ public class ComMessage {
     public ComMessage(JSONObject header, byte[] data) {
 
     }
+
+    //
+    public JSONObject extractHeaderIPC(ComMessage comMessage){
+
+        //extract JSONObject header and read keys
+        JSONObject recHeader = new JSONObject();
+
+        //TODO
+
+        return recHeader;
+
+    }
+
+
+
+
 }
 
 

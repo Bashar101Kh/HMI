@@ -18,7 +18,7 @@ public class Message {
     private String dataType;
     private int dataLenByte;
     private JSONObject header;
-    //private String plainTextContent; //jo851hil TODO keep content as byte array, if required in human readable for sout use respective BinToString
+    private String plainTextContent;
     private byte[] content;
 
     HMI_utilities hmiUtils = new HMI_utilities();
@@ -35,12 +35,14 @@ public class Message {
                 new SimpleDateFormat(pattern, new Locale("de", "DE"));
         timestamp = simpleDateFormat.format(new Date());
         dataType = "utf_8/text";
-        //plainTextContent = argMsg;
+        plainTextContent = argMsg;
         content = argMsg.getBytes(StandardCharsets.UTF_8);
         dataLenByte=content.length;
         header = new JSONObject();
     }
+    public Message(){
 
+    }
 /*    //jo851hil TODO check if necessary
     public Message(){
 
@@ -80,9 +82,9 @@ public class Message {
     public int getDataLenByte(){
         return dataLenByte;
     }
-    //public String getPlainTextContent() {
-//        return plainTextContent;
-//    }
+    public String getPlainTextContent() {
+        return plainTextContent;
+    }
     public JSONObject getHeader() {
         return header;
     }
@@ -111,9 +113,9 @@ public class Message {
     public void setDataLenByte(int dataLenByte) {
         this.dataLenByte = dataLenByte;
     }
-    //public void setPlainTextContent(String plainTextContent) {
-    //    this.plainTextContent = plainTextContent;
-    //}
+    public void setPlainTextContent(String plainTextContent) {
+        this.plainTextContent = plainTextContent;
+    }
     public void setHeader(JSONObject header){
         this.header = header;
     }
@@ -128,13 +130,15 @@ public class Message {
     //   return theMessage;
     //   }
 
-    //   public String print(Message message){
+    //TODO
+    public void print(Message message) {
 
-    //   }
+    }
 
-    //  public void send(Message message){
+    //TODO
+    public void send(Message message){
 
-    //  }
+    }
 
     public byte[] convertJSONToByte(JSONObject jObject){
 
@@ -164,6 +168,7 @@ public class Message {
         this.dataLenByte = jsonObject.getInt("dataLenByte");
     }
 
+    //Used to generate the byte[] data block to hand over to the comMessage
     public byte[] messageToByteArray(JSONObject jsonObject, Message message){
 
         byte[] json_data;
