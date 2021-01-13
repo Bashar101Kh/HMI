@@ -30,10 +30,10 @@ public class Message {
         senderID = "Test_sender";
         receiverID = argUser;
         genDate = new Date();
-        String pattern = "E dd.mm.yyyy HH:mm:ss.SSSZ";
+        String pattern = "dd.MM.yy HH:mm";
         SimpleDateFormat simpleDateFormat =
                 new SimpleDateFormat(pattern, new Locale("de", "DE"));
-        timestamp = simpleDateFormat.format(new Date());
+        timestamp = simpleDateFormat.format(genDate);
         dataType = "utf_8/text";
         plainTextContent = argMsg;
         content = argMsg.getBytes(StandardCharsets.UTF_8);
@@ -203,6 +203,11 @@ public class Message {
         jsonObject.put("dataLenByte",10);
 
         return jsonObject;
+    }
+
+    public void print(){
+        System.out.println(this.senderID+"@"+this.timestamp +":\n"
+                        +plainTextContent);
     }
 
 }
