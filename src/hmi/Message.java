@@ -10,59 +10,57 @@ import org.json.*;
 public class Message {
 
     //Fields
-    private String msgUuid;
+    private String msgID;
     private String senderID;
     private String receiverID;
-    private Date timestamp;
-    private String strDate;
+    private Date genDate;
+    private String timestamp;
     private String dataType;
     private int dataLenByte;
-
     private JSONObject header;
-
-    private String plainTextContent;
+    //private String plainTextContent; //jo851hil TODO keep content as byte array, if required in human readable for sout use respective BinToString
     private byte[] content;
 
     HMI_utilities hmiUtils = new HMI_utilities();
 
-    //Constructor //TODO Sender ID, dataType,
+    //Constructor //TODO Sender ID, receiverID, dataType,
     public Message(String argUser,String argMsg){
 
-        msgUuid = hmiUtils.generateUUID();
+        msgID = hmiUtils.generateUUID();
         senderID = "Test_sender";
         receiverID = argUser;
-        timestamp = new Date();
+        genDate = new Date();
         String pattern = "E dd.mm.yyyy HH:mm:ss.SSSZ";
         SimpleDateFormat simpleDateFormat =
                 new SimpleDateFormat(pattern, new Locale("de", "DE"));
-        strDate = simpleDateFormat.format(new Date());
+        timestamp = simpleDateFormat.format(new Date());
         dataType = "utf_8/text";
-        plainTextContent = argMsg;
-        content = plainTextContent.getBytes(StandardCharsets.UTF_8);
+        //plainTextContent = argMsg;
+        content = argMsg.getBytes(StandardCharsets.UTF_8);
         dataLenByte=content.length;
         header = new JSONObject();
     }
 
-    //jo851hil TODO check if necessary
+/*    //jo851hil TODO check if necessary
     public Message(){
 
-        msgUuid = hmiUtils.generateUUID();
+        msgID = hmiUtils.generateUUID();
         senderID = "Test_sender";
         receiverID = "Test_receiver";
-        timestamp = new Date();
+        genDate = new Date();
         String pattern = "E dd.mm.yyyy HH:mm:ss.SSSZ";
         SimpleDateFormat simpleDateFormat =
                 new SimpleDateFormat(pattern, new Locale("de", "DE"));
-        strDate = simpleDateFormat.format(new Date());
+        timestamp = simpleDateFormat.format(new Date());
         dataType = "utf_8/text";
-        plainTextContent = "";
-        content = plainTextContent.getBytes(StandardCharsets.UTF_8);
+        //plainTextContent = "";
+        content = argMsg.getBytes(StandardCharsets.UTF_8);
         dataLenByte=content.length;
         header = new JSONObject();
-    }
-
-    public String getMsgUuid(){
-        return msgUuid;
+   }
+*/
+    public String getMsgID(){
+        return msgID;
     }
     public String getSenderID(){
         return senderID;
@@ -70,11 +68,11 @@ public class Message {
     public String getReceiverID(){
         return receiverID;
     }
-    public Date getTimestamp(){
-        return timestamp;
+    public Date getGenDate(){
+        return genDate;
     }
-    public String getStrDate() {
-        return strDate;
+    public String getTimestamp() {
+        return timestamp;
     }
     public String getDataType(){
         return dataType;
@@ -82,9 +80,9 @@ public class Message {
     public int getDataLenByte(){
         return dataLenByte;
     }
-    public String getPlainTextContent() {
-        return plainTextContent;
-    }
+    //public String getPlainTextContent() {
+//        return plainTextContent;
+//    }
     public JSONObject getHeader() {
         return header;
     }
@@ -92,8 +90,8 @@ public class Message {
         return content;
     }
 
-    public void setMsgUuid(String msgUuid) {
-        this.msgUuid = msgUuid;
+    public void setMsgID(String msgID) {
+        this.msgID = msgID;
     }
     public void setSenderID(String senderID) {
         this.senderID = senderID;
@@ -101,11 +99,11 @@ public class Message {
     public void setReceiverID(String receiverID) {
         this.receiverID = receiverID;
     }
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+    public void setGenDate(Date genDate) {
+        this.genDate = genDate;
     }
-    public void setStrDate(String strDate) {
-        this.strDate = strDate;
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
     public void setDataType(String dataType) {
         this.dataType = dataType;
@@ -113,9 +111,9 @@ public class Message {
     public void setDataLenByte(int dataLenByte) {
         this.dataLenByte = dataLenByte;
     }
-    public void setPlainTextContent(String plainTextContent) {
-        this.plainTextContent = plainTextContent;
-    }
+    //public void setPlainTextContent(String plainTextContent) {
+    //    this.plainTextContent = plainTextContent;
+    //}
     public void setHeader(JSONObject header){
         this.header = header;
     }
@@ -148,20 +146,20 @@ public class Message {
 
     public static void createJSONFromMessage(Message message){
 
-        message.header.put("msgUuid",message.msgUuid);
+        message.header.put("msgUuid",message.msgID);
         message.header.put("senderID",message.senderID);
         message.header.put("receiverID",message.receiverID);
-        message.header.put("timestamp",message.strDate);
+        message.header.put("timestamp",message.timestamp);
         message.header.put("datatype",message.dataType);
         message.header.put("dataLenByte",message.dataLenByte);
     }
 
     public void createMessageFromJSON(JSONObject jsonObject){
 
-        this.msgUuid = jsonObject.getString("msgUuid");
+        this.msgID = jsonObject.getString("msgUuid");
         this.senderID = jsonObject.getString("senderID");
         this.receiverID = jsonObject.getString("receiverID");
-        this.strDate = jsonObject.getString("timestamp");
+        this.timestamp = jsonObject.getString("timestamp");
         this.dataType = jsonObject.getString("datatype");
         this.dataLenByte = jsonObject.getInt("dataLenByte");
     }
@@ -195,8 +193,8 @@ public class Message {
 
     public void testMessage(Message message){
 
-        System.out.println(message.msgUuid +" "+ message.senderID +" "+ message.receiverID);
-        System.out.println(message.timestamp);
+        System.out.println(message.msgID +" "+ message.senderID +" "+ message.receiverID);
+        System.out.println(message.genDate);
         System.out.println(message.dataType +" "+ message.dataLenByte);
     }
 
