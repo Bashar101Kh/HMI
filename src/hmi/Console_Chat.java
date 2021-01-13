@@ -18,6 +18,14 @@ public class Console_Chat {
     Message sendMessage;
     Message receiveMessage;
 
+
+    private String cmdHelp = "The following commands are available:" +
+                             "\n-help : list all commands" +
+                             "\n-user : list all available contacts" +
+                             "\n-user [UserName] : open chat with user" +
+                             "\n-user [UserName] [plainText] : send plain text message to user" +
+                             "\n-m [plainText] : when a user chat is opened with '-user Username' a plainText message is sent" +
+                             "\n-exit : close the program";
     //Constructor
     public Console_Chat(){
 
@@ -43,13 +51,7 @@ public class Console_Chat {
                 // -user -[userName]
                 if(len >= cmds[0].length() ? input.substring(0,cmds[0].length()).equals(cmds[0]) : false){
                     clearScreen();
-                    System.out.println("The following commands are available:" +
-                            "\n-help : list all commands" +
-                            "\n-user : list all available contacts" +
-                            "\n-user [UserName] : open chat with user" +
-                            "\n-user [UserName] [plainText] : send plain text message to user" +
-                            "\n-m [plainText] : when a user chat is opened with '-user Username' a plainText message is sent" +
-                            "\n-exit : close the program");
+                    System.out.println(cmdHelp);
                 }else if (len >= cmds[1].length() ? input.substring(0,cmds[1].length()).equals(cmds[1]) : false){
                     System.out.println("-user erkannt");
                     String[] cmd_chunks = input.split(" ");
