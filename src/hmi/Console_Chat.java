@@ -1,5 +1,7 @@
 package hmi;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -63,6 +65,8 @@ public class Console_Chat {
                         sendMessage = new Message(argUser,argMsg);
                         Message.createJSONFromMessage(sendMessage); //Message class mit header (JSON) und data (byte[])
                     //jo851hil TODO umwandeln von header und data in in byte[] und übergabe an comMessage constructor, zusätzlich comMessage header generieren
+
+                        ComMessage comMessage = new ComMessage(sendMessage.messageToByteArray(sendMessage));
 
                     }
 

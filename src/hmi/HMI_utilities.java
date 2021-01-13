@@ -41,10 +41,45 @@ public class HMI_utilities {
 
         //convert comMessage byte[] data block byte[] content and fill message object
         Message recMessage = new Message();
+        byte[] recData;
+        String dataString;
+        recData = comMessage.getData();
+
+        int arrayPos;
 
         //TODO
+        //split data into byte[] JSONHeader and  byte[] data
+        //OR convert byte array to string, extract {..} for JSON section and use consecutive section as plaintext
+
+        dataString = recData.toString();
+
+        //function to extract json from string
+        arrayPos=extractJSONFromString(dataString);
+
 
         return recMessage;
+    }
+
+    public int extractJSONFromString(String input){
+
+        int counter = 0;
+        int i;
+        char[] ca;
+        char ch;
+        ca = input.toCharArray();
+        for(i = 0; i<ca.length; i++){
+            if(ca[i]=='{')
+                counter++;
+            if(ca[i]=='}')
+                counter--;
+        }
+        if(counter != 0) {
+            System.out.println("Error in JSON");
+            return 0;
+        }
+        else{
+            return i;
+        }
     }
 
 }

@@ -37,6 +37,11 @@ public class ComMessage {
 
     }
 
+    //For Testing ONLY
+    public ComMessage(byte[] data) {
+        this.data=data;
+    }
+
     //
     public JSONObject extractHeaderIPC(ComMessage comMessage){
 

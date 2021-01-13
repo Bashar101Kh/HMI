@@ -164,12 +164,12 @@ public class Message {
     }
 
     //Used to generate the byte[] data block to hand over to the comMessage
-    public byte[] messageToByteArray(JSONObject jsonObject, Message message){
+    public byte[] messageToByteArray(Message message){
 
         byte[] json_data;
         byte[] message_data;
 
-        json_data = convertJSONToByte(jsonObject);
+        json_data = convertJSONToByte(message.header);
         message_data = message.content;
 
         byte[] combinedByteArray = new byte[json_data.length + message_data.length];
