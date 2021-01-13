@@ -43,7 +43,8 @@ public class Message {
     public Message(){
 
     }
-/*    //jo851hil TODO check if necessary
+/*
+    //jo851hil TODO check if necessary
     public Message(){
 
         msgID = hmiUtils.generateUUID();
@@ -60,7 +61,7 @@ public class Message {
         dataLenByte=content.length;
         header = new JSONObject();
    }
-*/
+
     public String getMsgID(){
         return msgID;
     }
@@ -122,20 +123,14 @@ public class Message {
     public void setContent(byte[] content){
         this.content = content;
     }
+*/
 
-    //   public Message sendMessage(String message){
-
-    //       Message theMessage = new Message();
-
-    //   return theMessage;
-    //   }
-
-    //TODO
+    //TODO Message strukturiert ausdrucken
     public void print(Message message) {
 
     }
 
-    //TODO
+    //TODO Message an ComMessage übergeben, ggf. methodenaufruf um an socket zu übergeben, tbd
     public void send(Message message){
 
     }
