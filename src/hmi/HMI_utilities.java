@@ -1,7 +1,5 @@
 package hmi;
 
-import org.json.JSONObject;
-
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -43,44 +41,52 @@ public class HMI_utilities {
         Message recMessage = new Message();
         byte[] recData;
         String dataString;
-        recData = comMessage.getData();
-
+        String headerString;
+        String messageString;
         int arrayPos;
 
         //TODO
         //split data into byte[] JSONHeader and  byte[] data
         //OR convert byte array to string, extract {..} for JSON section and use consecutive section as plaintext
 
-        dataString = recData.toString();
+        recData = comMessage.getData();
 
-        //function to extract json from string
-        arrayPos=extractJSONFromString(dataString);
+        dataString = BinToString(recData);
+
+        //split string at JSON end and split into two strings
+        arrayPos= getJSONIndexFromString(dataString);
+        headerString = dataString.substring(0,arrayPos+1);
+        messageString = dataString.substring(arrayPos+1,dataString.length());
+        System.out.println(arrayPos);
+        System.out.println(headerString);
+        System.out.println(messageString);
 
 
         return recMessage;
     }
 
-    public int extractJSONFromString(String input){
+    public int getJSONIndexFromString(String input){
 
         int counter = 0;
-        int i;
+        int i,n=0;
         char[] ca;
         char ch;
         ca = input.toCharArray();
         for(i = 0; i<ca.length; i++){
             if(ca[i]=='{')
                 counter++;
-            if(ca[i]=='}')
+            if(ca[i]=='}'){
                 counter--;
+                n=i;
+            }
         }
         if(counter != 0) {
             System.out.println("Error in JSON");
             return 0;
         }
         else{
-            return i;
+            return n;
         }
     }
-
 }
 

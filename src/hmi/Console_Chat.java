@@ -67,7 +67,7 @@ public class Console_Chat {
                     //jo851hil TODO umwandeln von header und data in in byte[] und übergabe an comMessage constructor, zusätzlich comMessage header generieren
 
                         ComMessage comMessage = new ComMessage(sendMessage.messageToByteArray(sendMessage));
-
+                        sendMessage.hmiUtils.extractDataIPC(comMessage);
                     }
 
                     //send /view history
