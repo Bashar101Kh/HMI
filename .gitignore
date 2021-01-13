@@ -3,5 +3,5 @@
 /.idea
 /out
 /src/META-INF
-hmi/hmi.plantuml
 /IJ_SA_HMI_V1.plantuml
+/src/hmi/hmi.plantuml
