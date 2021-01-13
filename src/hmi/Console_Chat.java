@@ -49,7 +49,6 @@ public class Console_Chat {
                 // -m [userName] [Message]
                 // -user -[userName]
                 if(len >= cmds[0].length() ? input.substring(0,cmds[0].length()).equals(cmds[0]) : false){
-                    clearScreen();
                     System.out.println(cmdHelp);
                 }else if (len >= cmds[1].length() ? input.substring(0,cmds[1].length()).equals(cmds[1]) : false){
                     System.out.println("-user erkannt");
