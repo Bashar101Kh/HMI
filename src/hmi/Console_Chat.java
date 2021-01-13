@@ -54,12 +54,16 @@ public class Console_Chat {
                 }else if (len >= cmds[1].length() ? input.substring(0,cmds[1].length()).equals(cmds[1]) : false){
                     System.out.println("-user erkannt");
                     String[] cmd_chunks = input.split(" ");
-                    argUser = cmd_chunks [1];
-                    for (int i = 2 ; i < cmd_chunks.length ; i++){
-                        argMsg += (i != cmd_chunks.length-1) ? (cmd_chunks[i]+" ") : (cmd_chunks[i]) ;
+                    argUser = cmd_chunks.length>1? cmd_chunks [1]:"-list users not implemented jet !";
+                    if (cmd_chunks.length>2){
+                        for (int i = 2 ; i < cmd_chunks.length ; i++){
+                            argMsg += (i != cmd_chunks.length-1) ? (cmd_chunks[i]+" ") : (cmd_chunks[i]) ;
+                        }
+                    }else{
+                        System.out.print("view "+argUser+"'s chat history");
                     }
 
-                    //jo851hil TODO argMsg an Message Contructor übergeben
+
                     //jo851hil TODO tbd wie ReceiverID übernommen wird, diese müsste zuerst vom Storage bezogen werden
                     if(argMsg != "") {
                         sendMessage = new Message(argUser,argMsg);
@@ -71,8 +75,10 @@ public class Console_Chat {
                     }
 
                     //send /view history
-                    System.out.println("Message:"+argMsg);
-                    System.out.println("User:"+argUser);
+                    Message message = new Message(argUser,argMsg);
+                    message.print();
+                    /*System.out.println("Message:"+argMsg);
+                    System.out.println("User:"+argUser);*/
                     //nach dem senden löschen
                     argUser ="";
                     argMsg = "";

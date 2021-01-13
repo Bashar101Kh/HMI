@@ -205,6 +205,11 @@ public class Message {
         return jsonObject;
     }
 
+    public void print(){
+        System.out.println(this.senderID+"@"+this.timestamp +":\n"
+                        +plainTextContent);
+    }
+
 }
 
 
