@@ -18,7 +18,6 @@ public class Console_Chat {
     Message sendMessage;
     Message receiveMessage;
 
-
     private String cmdHelp = "The following commands are available:" +
                              "\n-help : list all commands" +
                              "\n-user : list all available contacts" +
