@@ -18,6 +18,7 @@ public class Console_Chat {
     //jo851hil TODO
     Message sendMessage;
     Message receiveMessage;
+    HMI_utilities hmiUtils = new HMI_utilities();
 
     private String cmdHelp = "The following commands are available:" +
                              "\n-help : list all commands" +
@@ -71,7 +72,7 @@ public class Console_Chat {
                     //jo851hil TODO umwandeln von header und data in in byte[] und übergabe an comMessage constructor, zusätzlich comMessage header generieren
 
                         ComMessage comMessage = new ComMessage(sendMessage.messageToByteArray(sendMessage));
-                        sendMessage.hmiUtils.extractDataIPC(comMessage);
+                        hmiUtils.extractDataIPC(comMessage);
                     }
 
                     //send /view history

@@ -43,8 +43,8 @@ public class Message {
     public Message(){
 
     }
-/*
-    //jo851hil TODO check if necessary
+
+/*    //jo851hil TODO check if necessary
     public Message(){
 
         msgID = hmiUtils.generateUUID();
@@ -61,7 +61,7 @@ public class Message {
         dataLenByte=content.length;
         header = new JSONObject();
    }
-
+*/
     public String getMsgID(){
         return msgID;
     }
@@ -123,7 +123,7 @@ public class Message {
     public void setContent(byte[] content){
         this.content = content;
     }
-*/
+
 
     //TODO Message strukturiert ausdrucken
     public void print(Message message) {
@@ -155,12 +155,16 @@ public class Message {
 
     public void createMessageFromJSON(JSONObject jsonObject){
 
-        this.msgID = jsonObject.getString("msgUuid");
-        this.senderID = jsonObject.getString("senderID");
-        this.receiverID = jsonObject.getString("receiverID");
-        this.timestamp = jsonObject.getString("timestamp");
-        this.dataType = jsonObject.getString("datatype");
-        this.dataLenByte = jsonObject.getInt("dataLenByte");
+        if(jsonObject!=null) {
+            this.msgID = jsonObject.getString("msgUuid");
+            this.senderID = jsonObject.getString("senderID");
+            this.receiverID = jsonObject.getString("receiverID");
+            this.timestamp = jsonObject.getString("timestamp");
+            this.dataType = jsonObject.getString("datatype");
+            this.dataLenByte = jsonObject.getInt("dataLenByte");
+        }
+        else
+            System.out.println("Error in createMessageFromJSON: jsonObject = null");
     }
 
     //Used to generate the byte[] data block to hand over to the comMessage
