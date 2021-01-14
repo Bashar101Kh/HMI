@@ -35,6 +35,9 @@ public class ComMessage {
     //Constructor
     public ComMessage(JSONObject header, byte[] data) {
 
+        this.header=header;
+        this.data=data;
+
     }
 
     //For Testing ONLY
