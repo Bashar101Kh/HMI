@@ -1,6 +1,7 @@
 package hmi;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Console_Chat {
@@ -19,6 +20,7 @@ public class Console_Chat {
     ThreadMessage sendThreadMessage;
     ThreadMessage receiveThreadMessage;
     HMI_utilities hmiUtils = new HMI_utilities();
+    ArrayList<String> threads = new ArrayList<String>();
 
     private String cmdHelp = "The following commands are available:" +
                              "\n-help : list all commands" +
@@ -44,6 +46,7 @@ public class Console_Chat {
 
         Scanner scanner = new Scanner(System.in);
         while (run){
+            input = " ";
             input = scanner.nextLine();
             if (!input.isEmpty()){
                 len = input.length();
@@ -54,18 +57,23 @@ public class Console_Chat {
                 // boolean a ? [if true]statment1 : [if false]statment 2 ;
                 // -m [userName] [Message]
                 // -user -[userName]
-                if(input.equals("-"+ cmds.help)){
+                if(input.equals("-"+cmds.help)){
                     System.out.println(cmdHelp);
-
-                }else if (input.equals("-"+ cmds.newthread)){
+                //len >= cmds[0].length() ? input.substring(0,cmds[0].length()).equals(cmds[0]) : false
+                }else if (len >= cmds.newthread.toString().length() ? input.substring(1,cmds.newthread.toString().length()+1).equals(cmds.newthread.toString()) :false ){
                     System.out.println("-newthread command erkannt");
                     //TODO impliment cmd
+                    String[] cmd_chunks = input.split(" ");
+                    if (cmd_chunks.length == 3 ){                 // create thread
+                        ConversationThread conversationThread = new ConversationThread(cmd_chunks[1],"currentUser",cmd_chunks[2]);
+                        conversationThread.open();
+                    }else System.out.println("wrong arguments");
 
                 }else if (input.equals("-"+ cmds.userlist)){
                     System.out.println("-userlist command erkannt");
                     //TODO impliment cmd
 
-                }else if (input.equals("-"+ cmds.thread.toString())){
+                }else if (input.equals("-"+ cmds.thread)){
                     System.out.println("-thread command erkannt");
                     //TODO impliment cmd
                     String[] cmd_chunks = input.split(" ");
@@ -110,4 +118,8 @@ public class Console_Chat {
             e.printStackTrace();
         }
     }
+    public void UserInit(){
+
+    }
+
 }
