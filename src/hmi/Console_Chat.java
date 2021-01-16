@@ -58,13 +58,16 @@ public class Console_Chat {
                     System.out.println(cmdHelp);
 
                 }else if (input.equals("-"+ cmds.newthread)){
-                    System.out.println("-");
+                    System.out.println("-newthread command erkannt");
+                    //TODO impliment cmd
 
                 }else if (input.equals("-"+ cmds.userlist)){
-                    System.out.println("-userlist");
+                    System.out.println("-userlist command erkannt");
+                    //TODO impliment cmd
 
                 }else if (input.equals("-"+ cmds.thread.toString())){
-                    System.out.println("-Thread command erkannt");
+                    System.out.println("-thread command erkannt");
+                    //TODO impliment cmd
                     String[] cmd_chunks = input.split(" ");
                     if (input.length() == 1){                                   // extract the cmd
                         System.out.println("you need to provide arguments");
