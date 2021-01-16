@@ -20,6 +20,8 @@ public class ThreadMessage {
     private String timestampHr;
     private String dataType;
     private int dataLenByte;
+
+    //Fields for data exchange
     private JSONObject header;
     private byte[] content;
 
@@ -242,6 +244,7 @@ public class ThreadMessage {
 
         return data;
     }
+
     public byte[] convertJSONToByte(JSONObject jObject){
 
         byte[] byteArray;
