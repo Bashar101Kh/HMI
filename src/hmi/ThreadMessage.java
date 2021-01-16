@@ -111,7 +111,7 @@ public class ThreadMessage {
     //Message strukturiert ausdrucken
     public void print() {
         System.out.println(this.senderID + "@" + this.timestampHr + ":\n"
-                + hmiUtils.BytesToString(content));
+                + hmiUtils.bytesToString(content));
     }
 
     //TODO Message an Directive übergeben, ggf. methodenaufruf um an socket zu übergeben, tbd
@@ -168,7 +168,7 @@ public class ThreadMessage {
 
         //Get data and convert data byte array to string
         dirData = hmiDirective.getData();
-        dirDataString = hmiUtils.BytesToString(dirData);
+        dirDataString = hmiUtils.bytesToString(dirData);
 
         //Get last index of JSON String ('}'), Split dirDataString at this index into two separate strings
         arrayPos = hmiUtils.getJSONIndexFromString(dirDataString);
@@ -213,7 +213,7 @@ public class ThreadMessage {
 
         byte[] byteArray;
         HMI_utilities hmiUtil = new HMI_utilities();
-        byteArray = hmiUtil.StringToBytes(jsonObject.toString());
+        byteArray = hmiUtil.stringToBytes(jsonObject.toString());
         return byteArray;
     }
 

@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class HMI_utilities {
 
-    public byte[] StringToBytes(String inputString){
+    public byte[] stringToBytes(String inputString){
 
         Charset charset = StandardCharsets.UTF_8;
         byte[] byteArray = inputString.getBytes(charset);
@@ -19,7 +19,7 @@ public class HMI_utilities {
         return byteArray;
     }
 
-    public String BytesToString(byte[] byteArray) {
+    public String bytesToString(byte[] byteArray) {
 
         Charset charset = StandardCharsets.UTF_8;
         String string = charset.decode(ByteBuffer.wrap(byteArray))
