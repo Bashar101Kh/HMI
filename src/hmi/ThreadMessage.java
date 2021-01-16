@@ -154,13 +154,6 @@ public class ThreadMessage {
 
     }
 
-    public byte[] convertJSONToByte(JSONObject jObject){
-
-        byte[] byteArray;
-        HMI_utilities hmiUtil = new HMI_utilities();
-        byteArray = hmiUtil.StringToBytes(jObject.toString());
-        return byteArray;
-    }
 
     public void createJSONFromMessage(){
         JSONObject argsJSON = new JSONObject();
@@ -199,24 +192,6 @@ public class ThreadMessage {
             System.out.println("Error in createMessageFromJSON: jsonObject = null");
     }
 
-    //Generate  byte[] data block to hand over to the Directive
-    public byte[] messageToByteArray(ThreadMessage threadMessage){
-
-        byte[] json_data;
-        byte[] message_data;
-
-        json_data = convertJSONToByte(threadMessage.header);
-        message_data = threadMessage.content;
-
-        byte[] combinedByteArray = new byte[json_data.length + message_data.length];
-        ByteBuffer buff = ByteBuffer.wrap(combinedByteArray);
-        buff.put(json_data);
-        buff.put(message_data);
-        byte[] data = buff.array();
-
-        return data;
-    }
-
     //Create a Message Object from the comMessage byte[] data block
     public void genThrMesFromHmiDir(HMI_Directive hmiDirective){
 
@@ -249,6 +224,30 @@ public class ThreadMessage {
         this.createMessageFromJSON(messageJSON);
         this.setContent(threadMessageDataString.getBytes(StandardCharsets.UTF_8));
 
+    }
+
+    //Generate  byte[] data block to hand over to the Directive
+    public byte[] messageToByteArray(ThreadMessage threadMessage){
+
+        byte[] json_data;
+        byte[] message_data;
+
+        json_data = convertJSONToByte(threadMessage.header);
+        message_data = threadMessage.content;
+
+        byte[] combinedByteArray = new byte[json_data.length + message_data.length];
+        ByteBuffer buff = ByteBuffer.wrap(combinedByteArray);
+        buff.put(json_data);
+        buff.put(message_data);
+        byte[] data = buff.array();
+    }
+        return data;
+    public byte[] convertJSONToByte(JSONObject jObject){
+
+        byte[] byteArray;
+        HMI_utilities hmiUtil = new HMI_utilities();
+        byteArray = hmiUtil.StringToBytes(jObject.toString());
+        return byteArray;
     }
 
 
