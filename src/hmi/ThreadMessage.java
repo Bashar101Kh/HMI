@@ -24,24 +24,25 @@ public class ThreadMessage {
     HMI_utilities hmiUtils = new HMI_utilities();
 
     //Constructor //TODO Sender ID, receiverID, dataType,
-    public ThreadMessage(String argUser, String argMsg){
+    public ThreadMessage(){
+
+    }
+
+    public ThreadMessage(String argThread, String argMsg){
 
         msgUuid = hmiUtils.generateUUID();
         senderID = "Test_sender";
-        threadID = argUser;
+        threadID = argThread;
         genDate = new Date();
         timestampMillis = genDate.getTime();
         String pattern = "dd.MM.yy HH:mm";
         SimpleDateFormat simpleDateFormat =
                 new SimpleDateFormat(pattern, new Locale("de", "DE"));
         timestampHr = simpleDateFormat.format(genDate);
-        dataType = "utf_8/text";
+        dataType = "text";
         content = argMsg.getBytes(StandardCharsets.UTF_8);
         dataLenByte=content.length;
         header = new JSONObject();
-    }
-    public ThreadMessage(){
-
     }
 
 /*    //jo851hil TODO check if necessary
@@ -83,7 +84,6 @@ public class ThreadMessage {
     public int getDataLenByte(){
         return dataLenByte;
     }
-
     public JSONObject getHeader() {
         return header;
     }
@@ -121,11 +121,12 @@ public class ThreadMessage {
 
 
     //TODO Message strukturiert ausdrucken
-    public void print(ThreadMessage threadMessage) {
-
+    public void print() {
+        System.out.println(this.senderID + "@" + this.timestampHr + ":\n"
+                + hmiUtils.BytesToString(content));
     }
 
-    //TODO Message an ComMessage übergeben, ggf. methodenaufruf um an socket zu übergeben, tbd
+    //TODO Message an Directive übergeben, ggf. methodenaufruf um an socket zu übergeben, tbd
     public void send(ThreadMessage threadMessage){
 
     }
@@ -139,14 +140,16 @@ public class ThreadMessage {
     }
 
     public void createJSONFromMessage(){
+        JSONObject argsJSON = new JSONObject();
 
+        argsJSON.put("path","dummy text");
         this.header.put("msgUuid",this.msgUuid);
         this.header.put("senderID",this.senderID);
         this.header.put("threadID",this.threadID);
         this.header.put("timestampHr",this.timestampHr);
         this.header.put("timestampMillis",this.timestampMillis);
-        this.header.put("datatype",this.dataType);
-        this.header.put("dataLenByte",this.dataLenByte);
+        this.header.put("type",this.dataType);
+        this.header.put("args",argsJSON);
     }
 
     public void createMessageFromJSON(JSONObject jsonObject){
@@ -157,8 +160,7 @@ public class ThreadMessage {
             this.threadID = jsonObject.getString("threadID");
             this.timestampHr = jsonObject.getString("timestampHr");
             this.timestampMillis = jsonObject.getLong("timestampMillis");
-            this.dataType = jsonObject.getString("datatype");
-            this.dataLenByte = jsonObject.getInt("dataLenByte");
+            this.dataType = jsonObject.getString("type");
             this.header = jsonObject;
         }
         else
@@ -182,10 +184,10 @@ public class ThreadMessage {
 
         return data;
     }
+
     //Create a Message Object from the comMessage byte[] data block
     public void genThrMesFromHmiDir(HMI_Directive hmiDirective){
 
-        //Convert comMessage byte[] data block byte[] content and fill message object
         JSONObject  messageJSON = null;
         byte[] dirData;
         String dirDataString;
@@ -193,13 +195,14 @@ public class ThreadMessage {
         String threadMessageDataString;
         int arrayPos;
 
-        //Convert byte array to string, extract {..} for JSON section and use consecutive section as plaintext
+        //Get data and convert data byte array to string
         dirData = hmiDirective.getData();
         dirDataString = hmiUtils.BytesToString(dirData);
 
         //Get last index of JSON String ('}'), Split dirDataString at this index into two separate strings
         arrayPos = hmiUtils.getJSONIndexFromString(dirDataString);
         threadMessageHeaderString = dirDataString.substring(0,arrayPos+1);
+        //TODO if empty byte array is sent, make sure no null string is read
         threadMessageDataString = dirDataString.substring(arrayPos+1,dirDataString.length());
 
         //Convert header String into JSONObject
@@ -216,10 +219,7 @@ public class ThreadMessage {
 
     }
 
-    public void print() {
-        System.out.println(this.senderID + "@" + this.timestampHr + ":\n"
-                + hmiUtils.BytesToString(content));
-    }
+
 }
 
 
