@@ -18,7 +18,7 @@ public class ThreadMessage {
     private Date genDate;
     private long timestampMillis;
     private String timestampHr;
-    private String dataType;
+    private String type;
     private int dataLenByte;
 
     //Fields for data exchange
@@ -27,7 +27,7 @@ public class ThreadMessage {
 
     HMI_utilities hmiUtils = new HMI_utilities();
 
-    //Constructor //TODO Sender ID, receiverID, dataType,
+    //Constructor
     public ThreadMessage(){
 
     }
@@ -44,7 +44,7 @@ public class ThreadMessage {
         SimpleDateFormat simpleDateFormat =
                 new SimpleDateFormat(pattern, new Locale("de", "DE"));
         timestampHr = simpleDateFormat.format(genDate);
-        dataType = "text";
+        type = "text";
         content = argMsg.getBytes(StandardCharsets.UTF_8);
         dataLenByte=content.length;
         header = new JSONObject();
@@ -66,8 +66,8 @@ public class ThreadMessage {
     public String getTimestampHr() {
         return timestampHr;
     }
-    public String getDataType(){
-        return dataType;
+    public String getType(){
+        return type;
     }
     public int getDataLenByte(){
         return dataLenByte;
@@ -94,8 +94,8 @@ public class ThreadMessage {
     public void setTimestampHr(String timestampHr) {
         this.timestampHr = timestampHr;
     }
-    public void setDataType(String dataType) {
-        this.dataType = dataType;
+    public void setType(String type) {
+        this.type = type;
     }
     public void setDataLenByte(int dataLenByte) {
         this.dataLenByte = dataLenByte;
@@ -135,7 +135,7 @@ public class ThreadMessage {
         this.header.put("vclocks",vclocksJSON);
         this.header.put("timestampHr",this.timestampHr);
         this.header.put("timestampMillis",this.timestampMillis);
-        this.header.put("type",this.dataType);
+        this.header.put("type",this.type);
         this.header.put("args",argsJSON);
     }
 
@@ -149,7 +149,7 @@ public class ThreadMessage {
             this.threadName = jsonObject.getString("threadName");
             this.timestampHr = jsonObject.getString("timestampHr");
             this.timestampMillis = jsonObject.getLong("timestampMillis");
-            this.dataType = jsonObject.getString("type");
+            this.type = jsonObject.getString("type");
             this.header = jsonObject;
         }
         else
