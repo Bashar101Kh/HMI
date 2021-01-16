@@ -67,6 +67,7 @@ public class Console_Chat {
                     if(argMsg != "") {
                         sendThreadMessage = new ThreadMessage(argUser,argMsg);
                         sendThreadMessage.createJSONFromMessage(); //Message class mit header (JSON) und data (byte[])
+                        sendThreadMessage.print();
                     //jo851hil TODO umwandeln von header und data in in byte[] und übergabe an comMessage constructor, zusätzlich comMessage header generieren
 
                         HMI_Directive HMIDirective = new HMI_Directive(sendThreadMessage.messageToByteArray(sendThreadMessage));
@@ -75,8 +76,6 @@ public class Console_Chat {
                     }
 
                     //send /view history
-                    ThreadMessage threadMessage = new ThreadMessage(argUser,argMsg);
-                    threadMessage.print();
                     /*System.out.println("Message:"+argMsg);
                     System.out.println("User:"+argUser);*/
                     //nach dem senden löschen

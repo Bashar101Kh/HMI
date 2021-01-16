@@ -74,9 +74,7 @@ public class HMI_utilities {
         }
         //Give Message parameters to JSON
         recThreadMessage.createMessageFromJSON(messageJSON);
-        recThreadMessage.setHeader(messageJSON);
         recThreadMessage.setContent(messageDataString.getBytes(StandardCharsets.UTF_8));
-        recThreadMessage.setPlainTextContent(messageDataString);
 
         return recThreadMessage;
     }

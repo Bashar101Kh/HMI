@@ -13,12 +13,12 @@ public class ThreadMessage {
     private String msgUuid;
     private String senderID;
     private String threadID;
-    private Date timestampCr;
+    private Date genDate;
+    private long timestampMillis;
     private String timestampHr;
     private String dataType;
     private int dataLenByte;
     private JSONObject header;
-    private String plainTextContent;
     private byte[] content;
 
     HMI_utilities hmiUtils = new HMI_utilities();
@@ -29,13 +29,13 @@ public class ThreadMessage {
         msgUuid = hmiUtils.generateUUID();
         senderID = "Test_sender";
         threadID = argUser;
-        timestampCr = new Date();
+        genDate = new Date();
+        timestampMillis = genDate.getTime();
         String pattern = "dd.MM.yy HH:mm";
         SimpleDateFormat simpleDateFormat =
                 new SimpleDateFormat(pattern, new Locale("de", "DE"));
-        timestampHr = simpleDateFormat.format(timestampCr);
+        timestampHr = simpleDateFormat.format(genDate);
         dataType = "utf_8/text";
-        plainTextContent = argMsg;
         content = argMsg.getBytes(StandardCharsets.UTF_8);
         dataLenByte=content.length;
         header = new JSONObject();
@@ -71,8 +71,8 @@ public class ThreadMessage {
     public String getThreadID(){
         return threadID;
     }
-    public Date getTimestampCr(){
-        return timestampCr;
+    public Date getGenDate(){
+        return genDate;
     }
     public String getTimestampHr() {
         return timestampHr;
@@ -83,9 +83,7 @@ public class ThreadMessage {
     public int getDataLenByte(){
         return dataLenByte;
     }
-    public String getPlainTextContent() {
-        return plainTextContent;
-    }
+
     public JSONObject getHeader() {
         return header;
     }
@@ -102,8 +100,8 @@ public class ThreadMessage {
     public void setThreadID(String threadID) {
         this.threadID = threadID;
     }
-    public void setTimestampCr(Date timestampCr) {
-        this.timestampCr = timestampCr;
+    public void setGenDate(Date genDate) {
+        this.genDate = genDate;
     }
     public void setTimestampHr(String timestampHr) {
         this.timestampHr = timestampHr;
@@ -113,9 +111,6 @@ public class ThreadMessage {
     }
     public void setDataLenByte(int dataLenByte) {
         this.dataLenByte = dataLenByte;
-    }
-    public void setPlainTextContent(String plainTextContent) {
-        this.plainTextContent = plainTextContent;
     }
     public void setHeader(JSONObject header){
         this.header = header;
@@ -147,8 +142,9 @@ public class ThreadMessage {
 
         this.header.put("msgUuid",this.msgUuid);
         this.header.put("senderID",this.senderID);
-        this.header.put("receiverID",this.threadID);
-        this.header.put("timestamp",this.timestampHr);
+        this.header.put("threadID",this.threadID);
+        this.header.put("timestampHr",this.timestampHr);
+        this.header.put("timestampMillis",this.timestampMillis);
         this.header.put("datatype",this.dataType);
         this.header.put("dataLenByte",this.dataLenByte);
     }
@@ -158,10 +154,13 @@ public class ThreadMessage {
         if(jsonObject!=null) {
             this.msgUuid = jsonObject.getString("msgUuid");
             this.senderID = jsonObject.getString("senderID");
-            this.threadID = jsonObject.getString("receiverID");
-            this.timestampHr = jsonObject.getString("timestamp");
+            this.threadID = jsonObject.getString("threadID");
+            this.timestampHr = jsonObject.getString("timestampHr");
+            //TODO Konvertierung von timestampCr int zu String
+            this.timestampMillis = jsonObject.getLong("timestampMillis");
             this.dataType = jsonObject.getString("datatype");
             this.dataLenByte = jsonObject.getInt("dataLenByte");
+            this.header = jsonObject;
         }
         else
             System.out.println("Error in createMessageFromJSON: jsonObject = null");
@@ -185,6 +184,7 @@ public class ThreadMessage {
         return data;
     }
 
+
     /****************************************************************
      * FOR TESTING
      ****************************************************************/
@@ -198,7 +198,7 @@ public class ThreadMessage {
     public void testMessage(ThreadMessage threadMessage){
 
         System.out.println(threadMessage.msgUuid +" "+ threadMessage.senderID +" "+ threadMessage.threadID);
-        System.out.println(threadMessage.timestampCr);
+        System.out.println(threadMessage.genDate);
         System.out.println(threadMessage.dataType +" "+ threadMessage.dataLenByte);
     }
 
@@ -211,7 +211,7 @@ public class ThreadMessage {
 
     public void print(){
         System.out.println(this.senderID+"@"+this.timestampHr +":\n"
-                        +plainTextContent);
+                        + hmiUtils.BytesToString(content));
     }
 
 }
