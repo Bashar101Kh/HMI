@@ -7,8 +7,8 @@ package hmi;
  *
  * 2. Console aufbauen
  *    - Consolen Input auslesen und in Message Format (JSON & Byte[]) wandeln - erledigt
- *    - TODO Console Output - "send Funktion" - 1.
- *    - TODO Console Output - dummy Nachricht festlegen & print Funktion dafür auswerfen
+ *    - Console Output - "send Funktion" - 1. - erledigt
+ *    - Console Output - dummy Nachricht festlegen & print Funktion dafür auswerfen - erledigt
  *
  * 3. JSON & Byte[] als byte[] data verpacken (JSON Objekt umwandeln & Byte[] "anhängen", Klasse Data: Byte[])
  *    - erledigt
