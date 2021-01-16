@@ -174,7 +174,7 @@ public class ThreadMessage {
         this.header.put("senderID",this.senderID);
         this.header.put("senderName",this.senderName);
         this.header.put("threadID",this.threadID);
-        this.header.put("threadName",this.threadName)
+        this.header.put("threadName",this.threadName);
         this.header.put("vclocks",vclocksJSON);
         this.header.put("timestampHr",this.timestampHr);
         this.header.put("timestampMillis",this.timestampMillis);
