@@ -12,12 +12,16 @@ public class ThreadMessage {
     //Fields
     private String msgUuid;
     private String senderID;
+    private String senderName;
     private String threadID;
+    private String threadName;
     private Date genDate;
     private long timestampMillis;
     private String timestampHr;
     private String dataType;
     private int dataLenByte;
+
+    //Fields for data exchange
     private JSONObject header;
     private byte[] content;
 
@@ -28,6 +32,43 @@ public class ThreadMessage {
 
     }
 
+    public ThreadMessage(String argMsg, String argThreadID, String argThreadMessage, String argSenderID, String argSenderName){
+
+        msgUuid = hmiUtils.generateUUID();
+        senderID = argSenderID;
+        senderName = argSenderName;
+        threadID = argThreadID;
+        threadName = argThreadMessage;
+        genDate = new Date();
+        timestampMillis = genDate.getTime();
+        String pattern = "dd.MM.yy HH:mm";
+        SimpleDateFormat simpleDateFormat =
+                new SimpleDateFormat(pattern, new Locale("de", "DE"));
+        timestampHr = simpleDateFormat.format(genDate);
+        dataType = "text";
+        content = argMsg.getBytes(StandardCharsets.UTF_8);
+        dataLenByte=content.length;
+        header = new JSONObject();
+    }
+
+/*    public Message(){
+
+        msgID = hmiUtils.generateUUID();
+        senderID = "Test_sender";
+        receiverID = "Test_receiver";
+        genDate = new Date();
+        String pattern = "E dd.mm.yyyy HH:mm:ss.SSSZ";
+        SimpleDateFormat simpleDateFormat =
+                new SimpleDateFormat(pattern, new Locale("de", "DE"));
+        timestamp = simpleDateFormat.format(new Date());
+        dataType = "utf_8/text";
+        //plainTextContent = "";
+        content = argMsg.getBytes(StandardCharsets.UTF_8);
+        dataLenByte=content.length;
+        header = new JSONObject();
+   }
+*/
+/*
     public ThreadMessage(String argThread, String argMsg){
 
         msgUuid = hmiUtils.generateUUID();
@@ -45,24 +86,7 @@ public class ThreadMessage {
         header = new JSONObject();
     }
 
-/*    //jo851hil TODO check if necessary
-    public Message(){
-
-        msgID = hmiUtils.generateUUID();
-        senderID = "Test_sender";
-        receiverID = "Test_receiver";
-        genDate = new Date();
-        String pattern = "E dd.mm.yyyy HH:mm:ss.SSSZ";
-        SimpleDateFormat simpleDateFormat =
-                new SimpleDateFormat(pattern, new Locale("de", "DE"));
-        timestamp = simpleDateFormat.format(new Date());
-        dataType = "utf_8/text";
-        //plainTextContent = "";
-        content = argMsg.getBytes(StandardCharsets.UTF_8);
-        dataLenByte=content.length;
-        header = new JSONObject();
-   }
-*/
+ */
     public String getMsgUuid(){
         return msgUuid;
     }
@@ -120,7 +144,7 @@ public class ThreadMessage {
     }
 
 
-    //TODO Message strukturiert ausdrucken
+    //Message strukturiert ausdrucken
     public void print() {
         System.out.println(this.senderID + "@" + this.timestampHr + ":\n"
                 + hmiUtils.BytesToString(content));
@@ -129,14 +153,6 @@ public class ThreadMessage {
     //TODO Message an Directive übergeben, ggf. methodenaufruf um an socket zu übergeben, tbd
     public void send(ThreadMessage threadMessage){
 
-    }
-
-    public byte[] convertJSONToByte(JSONObject jObject){
-
-        byte[] byteArray;
-        HMI_utilities hmiUtil = new HMI_utilities();
-        byteArray = hmiUtil.StringToBytes(jObject.toString());
-        return byteArray;
     }
 
     public void createJSONFromMessage(){
@@ -149,7 +165,9 @@ public class ThreadMessage {
 
         this.header.put("msgUuid",this.msgUuid);
         this.header.put("senderID",this.senderID);
+        this.header.put("senderName",this.senderName);
         this.header.put("threadID",this.threadID);
+        this.header.put("threadName",this.threadName);
         this.header.put("vclocks",vclocksJSON);
         this.header.put("timestampHr",this.timestampHr);
         this.header.put("timestampMillis",this.timestampMillis);
@@ -162,7 +180,9 @@ public class ThreadMessage {
         if(jsonObject!=null) {
             this.msgUuid = jsonObject.getString("msgUuid");
             this.senderID = jsonObject.getString("senderID");
+            this.senderName = jsonObject.getString("sendereName");
             this.threadID = jsonObject.getString("threadID");
+            this.threadName = jsonObject.getString("threadName");
             this.timestampHr = jsonObject.getString("timestampHr");
             this.timestampMillis = jsonObject.getLong("timestampMillis");
             this.dataType = jsonObject.getString("type");
@@ -172,26 +192,8 @@ public class ThreadMessage {
             System.out.println("Error in createMessageFromJSON: jsonObject = null");
     }
 
-    //Used to generate the byte[] data block to hand over to the comMessage
-    public byte[] messageToByteArray(ThreadMessage threadMessage){
-
-        byte[] json_data;
-        byte[] message_data;
-
-        json_data = convertJSONToByte(threadMessage.header);
-        message_data = threadMessage.content;
-
-        byte[] combinedByteArray = new byte[json_data.length + message_data.length];
-        ByteBuffer buff = ByteBuffer.wrap(combinedByteArray);
-        buff.put(json_data);
-        buff.put(message_data);
-        byte[] data = buff.array();
-
-        return data;
-    }
-
     //Create a Message Object from the comMessage byte[] data block
-    public void genThrMesFromHmiDir(HMI_Directive hmiDirective){
+    public void genThreadMessageFromHmiDirectory(HMI_Directive hmiDirective){
 
         JSONObject  messageJSON = null;
         byte[] dirData;
@@ -222,6 +224,33 @@ public class ThreadMessage {
         this.createMessageFromJSON(messageJSON);
         this.setContent(threadMessageDataString.getBytes(StandardCharsets.UTF_8));
 
+    }
+
+    //Generate  byte[] data block to hand over to the Directive
+    public byte[] messageToByte(ThreadMessage threadMessage){
+
+        byte[] json_data;
+        byte[] message_data;
+
+        json_data = jsonToByte(threadMessage.header);
+        message_data = threadMessage.content;
+
+        byte[] combinedByteArray = new byte[json_data.length + message_data.length];
+        ByteBuffer buff = ByteBuffer.wrap(combinedByteArray);
+        buff.put(json_data);
+        buff.put(message_data);
+        byte[] data = buff.array();
+
+        return data;
+    }
+
+    //Convert JSONObject String to byte[]
+    public byte[] jsonToByte(JSONObject jsonObject){
+
+        byte[] byteArray;
+        HMI_utilities hmiUtil = new HMI_utilities();
+        byteArray = hmiUtil.StringToBytes(jsonObject.toString());
+        return byteArray;
     }
 
 

@@ -32,6 +32,7 @@ import java.util.Arrays;
 public class Main{
     public static void main(String[] args) {
         Console_Chat cc = new Console_Chat();
+        cc.registerUser();
         cc.start();
     }
 }

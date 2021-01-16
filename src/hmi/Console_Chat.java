@@ -1,7 +1,6 @@
 package hmi;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Console_Chat {
@@ -15,12 +14,13 @@ public class Console_Chat {
     }
     //Fields
     private boolean run ;
+    private String currentUserID;
+    private String currentUserName;
 
     //jo851hil TODO
     ThreadMessage sendThreadMessage;
     ThreadMessage receiveThreadMessage;
     HMI_utilities hmiUtils = new HMI_utilities();
-    ArrayList<String> threads = new ArrayList<String>();
 
     private String cmdHelp = "The following commands are available:" +
                              "\n-help : list all commands" +
@@ -46,7 +46,6 @@ public class Console_Chat {
 
         Scanner scanner = new Scanner(System.in);
         while (run){
-            input = " ";
             input = scanner.nextLine();
             if (!input.isEmpty()){
                 len = input.length();
@@ -110,6 +109,7 @@ public class Console_Chat {
     }
 
     public static void clearScreen(){
+
         try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         } catch (InterruptedException e) {
@@ -118,8 +118,19 @@ public class Console_Chat {
             e.printStackTrace();
         }
     }
+
+    public void registerUser(){
+
+        System.out.println("Please enter your desired username");
+        Scanner scanner = new Scanner(System.in);
+
+        //check if input correct and in limitations
+        this.currentUserName = scanner.nextLine();
+        this.currentUserID  = hmiUtils.generateUUID();
+
+        //functionality to send data to STOR via Stream/Socket of Daemon-process
+    }
     public void UserInit(){
 
     }
-
 }
