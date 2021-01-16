@@ -13,8 +13,8 @@ public class Message {
     private String msgID;
     private String senderID;
     private String receiverID;
-    private Date genDate;
-    private String timestamp;
+    private Date timestampCr;
+    private String timestampHr;
     private String dataType;
     private int dataLenByte;
     private JSONObject header;
@@ -29,11 +29,11 @@ public class Message {
         msgID = hmiUtils.generateUUID();
         senderID = "Test_sender";
         receiverID = argUser;
-        genDate = new Date();
+        timestampCr = new Date();
         String pattern = "dd.MM.yy HH:mm";
         SimpleDateFormat simpleDateFormat =
                 new SimpleDateFormat(pattern, new Locale("de", "DE"));
-        timestamp = simpleDateFormat.format(genDate);
+        timestampHr = simpleDateFormat.format(timestampCr);
         dataType = "utf_8/text";
         plainTextContent = argMsg;
         content = argMsg.getBytes(StandardCharsets.UTF_8);
@@ -71,11 +71,11 @@ public class Message {
     public String getReceiverID(){
         return receiverID;
     }
-    public Date getGenDate(){
-        return genDate;
+    public Date getTimestampCr(){
+        return timestampCr;
     }
-    public String getTimestamp() {
-        return timestamp;
+    public String getTimestampHr() {
+        return timestampHr;
     }
     public String getDataType(){
         return dataType;
@@ -102,11 +102,11 @@ public class Message {
     public void setReceiverID(String receiverID) {
         this.receiverID = receiverID;
     }
-    public void setGenDate(Date genDate) {
-        this.genDate = genDate;
+    public void setTimestampCr(Date timestampCr) {
+        this.timestampCr = timestampCr;
     }
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setTimestampHr(String timestampHr) {
+        this.timestampHr = timestampHr;
     }
     public void setDataType(String dataType) {
         this.dataType = dataType;
@@ -139,18 +139,18 @@ public class Message {
 
         byte[] byteArray;
         HMI_utilities hmiUtil = new HMI_utilities();
-        byteArray = hmiUtil.StringToBin(jObject.toString());
+        byteArray = hmiUtil.StringToBytes(jObject.toString());
         return byteArray;
     }
 
-    public static void createJSONFromMessage(Message message){
+    public void createJSONFromMessage(){
 
-        message.header.put("msgUuid",message.msgID);
-        message.header.put("senderID",message.senderID);
-        message.header.put("receiverID",message.receiverID);
-        message.header.put("timestamp",message.timestamp);
-        message.header.put("datatype",message.dataType);
-        message.header.put("dataLenByte",message.dataLenByte);
+        this.header.put("msgUuid",this.msgID);
+        this.header.put("senderID",this.senderID);
+        this.header.put("receiverID",this.receiverID);
+        this.header.put("timestamp",this.timestampHr);
+        this.header.put("datatype",this.dataType);
+        this.header.put("dataLenByte",this.dataLenByte);
     }
 
     public void createMessageFromJSON(JSONObject jsonObject){
@@ -159,7 +159,7 @@ public class Message {
             this.msgID = jsonObject.getString("msgUuid");
             this.senderID = jsonObject.getString("senderID");
             this.receiverID = jsonObject.getString("receiverID");
-            this.timestamp = jsonObject.getString("timestamp");
+            this.timestampHr = jsonObject.getString("timestamp");
             this.dataType = jsonObject.getString("datatype");
             this.dataLenByte = jsonObject.getInt("dataLenByte");
         }
@@ -198,7 +198,7 @@ public class Message {
     public void testMessage(Message message){
 
         System.out.println(message.msgID +" "+ message.senderID +" "+ message.receiverID);
-        System.out.println(message.genDate);
+        System.out.println(message.timestampCr);
         System.out.println(message.dataType +" "+ message.dataLenByte);
     }
 
@@ -210,7 +210,7 @@ public class Message {
     }
 
     public void print(){
-        System.out.println(this.senderID+"@"+this.timestamp +":\n"
+        System.out.println(this.senderID+"@"+this.timestampHr +":\n"
                         +plainTextContent);
     }
 

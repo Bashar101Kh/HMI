@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class HMI_utilities {
 
-    public byte[] StringToBin(String inputString){
+    public byte[] StringToBytes(String inputString){
 
         Charset charset = StandardCharsets.UTF_8;
         byte[] byteArray = inputString.getBytes(charset);
@@ -19,7 +19,7 @@ public class HMI_utilities {
         return byteArray;
     }
 
-    public String BinToString(byte[] byteArray) {
+    public String BytesToString(byte[] byteArray) {
 
         Charset charset = StandardCharsets.UTF_8;
         String string = charset.decode(ByteBuffer.wrap(byteArray))
@@ -54,7 +54,7 @@ public class HMI_utilities {
         //OR convert byte array to string, extract {..} for JSON section and use consecutive section as plaintext
 
         comData = comMessage.getData();
-        comDataString = BinToString(comData);
+        comDataString = BytesToString(comData);
 
         //Get last index of JSON String ('}'), Split comDataString at this index into two separate strings
         arrayPos = getJSONIndexFromString(comDataString);

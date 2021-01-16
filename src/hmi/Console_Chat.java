@@ -68,11 +68,12 @@ public class Console_Chat {
                     //jo851hil TODO tbd wie ReceiverID übernommen wird, diese müsste zuerst vom Storage bezogen werden
                     if(argMsg != "") {
                         sendMessage = new Message(argUser,argMsg);
-                        Message.createJSONFromMessage(sendMessage); //Message class mit header (JSON) und data (byte[])
+                        sendMessage.createJSONFromMessage(); //Message class mit header (JSON) und data (byte[])
                     //jo851hil TODO umwandeln von header und data in in byte[] und übergabe an comMessage constructor, zusätzlich comMessage header generieren
 
                         ComMessage comMessage = new ComMessage(sendMessage.messageToByteArray(sendMessage));
-                        hmiUtils.extractDataIPC(comMessage);
+                        receiveMessage = hmiUtils.extractDataIPC(comMessage);
+                        receiveMessage.print();
                     }
 
                     //send /view history
