@@ -37,47 +37,6 @@ public class HMI_utilities {
         return uuidString;
     }
 
-    //Create a Message Object from the comMessage byte[] data block
-    public ThreadMessage extractDataIPC(HMI_Directive HMIDirective){
-
-        //Convert comMessage byte[] data block byte[] content and fill message object
-        ThreadMessage recThreadMessage = new ThreadMessage();
-        JSONObject  messageJSON = null;
-        byte[] comData;
-        String comDataString;
-        String messageHeaderString;
-        String messageDataString;
-        int arrayPos;
-
-        //TODO
-        //Split data into byte[] JSONHeader and  byte[] data, this would require an index
-        //OR convert byte array to string, extract {..} for JSON section and use consecutive section as plaintext
-
-        comData = HMIDirective.getData();
-        comDataString = BytesToString(comData);
-
-        //Get last index of JSON String ('}'), Split comDataString at this index into two separate strings
-        arrayPos = getJSONIndexFromString(comDataString);
-        messageHeaderString = comDataString.substring(0,arrayPos+1);
-        messageDataString = comDataString.substring(arrayPos+1,comDataString.length());
-
-        //Print for testing purposes
-//        System.out.println(messageHeaderString);
-//        System.out.println(messageDataString);
-
-        //Convert string of JSONObject into JSONObject
-        //TODO try catch, proper catch logic
-        try {
-            messageJSON = new JSONObject(messageHeaderString);
-        }catch(JSONException err){
-            System.out.println("Exception while creating JSONObject from comMessage");
-        }
-        //Give Message parameters to JSON
-        recThreadMessage.createMessageFromJSON(messageJSON);
-        recThreadMessage.setContent(messageDataString.getBytes(StandardCharsets.UTF_8));
-
-        return recThreadMessage;
-    }
 
     //Returns the index of the last '}' char from a JSON string from a concatenated string
     public int getJSONIndexFromString(String input){

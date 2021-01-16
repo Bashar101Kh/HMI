@@ -156,7 +156,6 @@ public class ThreadMessage {
             this.senderID = jsonObject.getString("senderID");
             this.threadID = jsonObject.getString("threadID");
             this.timestampHr = jsonObject.getString("timestampHr");
-            //TODO Konvertierung von timestampCr int zu String
             this.timestampMillis = jsonObject.getLong("timestampMillis");
             this.dataType = jsonObject.getString("datatype");
             this.dataLenByte = jsonObject.getInt("dataLenByte");
@@ -183,37 +182,44 @@ public class ThreadMessage {
 
         return data;
     }
+    //Create a Message Object from the comMessage byte[] data block
+    public void genThrMesFromHmiDir(HMI_Directive hmiDirective){
 
+        //Convert comMessage byte[] data block byte[] content and fill message object
+        JSONObject  messageJSON = null;
+        byte[] dirData;
+        String dirDataString;
+        String threadMessageHeaderString;
+        String threadMessageDataString;
+        int arrayPos;
 
-    /****************************************************************
-     * FOR TESTING
-     ****************************************************************/
+        //Convert byte array to string, extract {..} for JSON section and use consecutive section as plaintext
+        dirData = hmiDirective.getData();
+        dirDataString = hmiUtils.BytesToString(dirData);
 
-    public void testJSON(){
+        //Get last index of JSON String ('}'), Split dirDataString at this index into two separate strings
+        arrayPos = hmiUtils.getJSONIndexFromString(dirDataString);
+        threadMessageHeaderString = dirDataString.substring(0,arrayPos+1);
+        threadMessageDataString = dirDataString.substring(arrayPos+1,dirDataString.length());
 
-        byte[] receivedByteArray;
-        HMI_utilities hmiUtil = new HMI_utilities();
+        //Convert header String into JSONObject
+        //TODO try catch, proper catch logic
+        try {
+            messageJSON = new JSONObject(threadMessageHeaderString);
+        }catch(JSONException err){
+            System.out.println("Exception while creating JSONObject from comMessage");
+        }
+
+        //Set the Message parameters according to JSONObject
+        this.createMessageFromJSON(messageJSON);
+        this.setContent(threadMessageDataString.getBytes(StandardCharsets.UTF_8));
+
     }
 
-    public void testMessage(ThreadMessage threadMessage){
-
-        System.out.println(threadMessage.msgUuid +" "+ threadMessage.senderID +" "+ threadMessage.threadID);
-        System.out.println(threadMessage.genDate);
-        System.out.println(threadMessage.dataType +" "+ threadMessage.dataLenByte);
+    public void print() {
+        System.out.println(this.senderID + "@" + this.timestampHr + ":\n"
+                + hmiUtils.BytesToString(content));
     }
-
-    public JSONObject editJSONKey(JSONObject jsonObject){
-
-        jsonObject.put("dataLenByte",10);
-
-        return jsonObject;
-    }
-
-    public void print(){
-        System.out.println(this.senderID+"@"+this.timestampHr +":\n"
-                        + hmiUtils.BytesToString(content));
-    }
-
 }
 
 

@@ -71,7 +71,8 @@ public class Console_Chat {
                     //jo851hil TODO umwandeln von header und data in in byte[] und übergabe an comMessage constructor, zusätzlich comMessage header generieren
 
                         HMI_Directive HMIDirective = new HMI_Directive(sendThreadMessage.messageToByteArray(sendThreadMessage));
-                        receiveThreadMessage = hmiUtils.extractDataIPC(HMIDirective);
+                        receiveThreadMessage = new ThreadMessage();
+                        receiveThreadMessage.genThrMesFromHmiDir(HMIDirective);
                         receiveThreadMessage.print();
                     }
 
