@@ -7,12 +7,12 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import org.json.*;
 
-public class Message {
+public class ThreadMessage {
 
     //Fields
-    private String msgID;
+    private String msgUuid;
     private String senderID;
-    private String receiverID;
+    private String threadID;
     private Date timestampCr;
     private String timestampHr;
     private String dataType;
@@ -24,11 +24,11 @@ public class Message {
     HMI_utilities hmiUtils = new HMI_utilities();
 
     //Constructor //TODO Sender ID, receiverID, dataType,
-    public Message(String argUser,String argMsg){
+    public ThreadMessage(String argUser, String argMsg){
 
-        msgID = hmiUtils.generateUUID();
+        msgUuid = hmiUtils.generateUUID();
         senderID = "Test_sender";
-        receiverID = argUser;
+        threadID = argUser;
         timestampCr = new Date();
         String pattern = "dd.MM.yy HH:mm";
         SimpleDateFormat simpleDateFormat =
@@ -40,7 +40,7 @@ public class Message {
         dataLenByte=content.length;
         header = new JSONObject();
     }
-    public Message(){
+    public ThreadMessage(){
 
     }
 
@@ -62,14 +62,14 @@ public class Message {
         header = new JSONObject();
    }
 */
-    public String getMsgID(){
-        return msgID;
+    public String getMsgUuid(){
+        return msgUuid;
     }
     public String getSenderID(){
         return senderID;
     }
-    public String getReceiverID(){
-        return receiverID;
+    public String getThreadID(){
+        return threadID;
     }
     public Date getTimestampCr(){
         return timestampCr;
@@ -93,14 +93,14 @@ public class Message {
         return content;
     }
 
-    public void setMsgID(String msgID) {
-        this.msgID = msgID;
+    public void setMsgUuid(String msgUuid) {
+        this.msgUuid = msgUuid;
     }
     public void setSenderID(String senderID) {
         this.senderID = senderID;
     }
-    public void setReceiverID(String receiverID) {
-        this.receiverID = receiverID;
+    public void setThreadID(String threadID) {
+        this.threadID = threadID;
     }
     public void setTimestampCr(Date timestampCr) {
         this.timestampCr = timestampCr;
@@ -126,12 +126,12 @@ public class Message {
 
 
     //TODO Message strukturiert ausdrucken
-    public void print(Message message) {
+    public void print(ThreadMessage threadMessage) {
 
     }
 
     //TODO Message an ComMessage übergeben, ggf. methodenaufruf um an socket zu übergeben, tbd
-    public void send(Message message){
+    public void send(ThreadMessage threadMessage){
 
     }
 
@@ -145,9 +145,9 @@ public class Message {
 
     public void createJSONFromMessage(){
 
-        this.header.put("msgUuid",this.msgID);
+        this.header.put("msgUuid",this.msgUuid);
         this.header.put("senderID",this.senderID);
-        this.header.put("receiverID",this.receiverID);
+        this.header.put("receiverID",this.threadID);
         this.header.put("timestamp",this.timestampHr);
         this.header.put("datatype",this.dataType);
         this.header.put("dataLenByte",this.dataLenByte);
@@ -156,9 +156,9 @@ public class Message {
     public void createMessageFromJSON(JSONObject jsonObject){
 
         if(jsonObject!=null) {
-            this.msgID = jsonObject.getString("msgUuid");
+            this.msgUuid = jsonObject.getString("msgUuid");
             this.senderID = jsonObject.getString("senderID");
-            this.receiverID = jsonObject.getString("receiverID");
+            this.threadID = jsonObject.getString("receiverID");
             this.timestampHr = jsonObject.getString("timestamp");
             this.dataType = jsonObject.getString("datatype");
             this.dataLenByte = jsonObject.getInt("dataLenByte");
@@ -168,13 +168,13 @@ public class Message {
     }
 
     //Used to generate the byte[] data block to hand over to the comMessage
-    public byte[] messageToByteArray(Message message){
+    public byte[] messageToByteArray(ThreadMessage threadMessage){
 
         byte[] json_data;
         byte[] message_data;
 
-        json_data = convertJSONToByte(message.header);
-        message_data = message.content;
+        json_data = convertJSONToByte(threadMessage.header);
+        message_data = threadMessage.content;
 
         byte[] combinedByteArray = new byte[json_data.length + message_data.length];
         ByteBuffer buff = ByteBuffer.wrap(combinedByteArray);
@@ -195,11 +195,11 @@ public class Message {
         HMI_utilities hmiUtil = new HMI_utilities();
     }
 
-    public void testMessage(Message message){
+    public void testMessage(ThreadMessage threadMessage){
 
-        System.out.println(message.msgID +" "+ message.senderID +" "+ message.receiverID);
-        System.out.println(message.timestampCr);
-        System.out.println(message.dataType +" "+ message.dataLenByte);
+        System.out.println(threadMessage.msgUuid +" "+ threadMessage.senderID +" "+ threadMessage.threadID);
+        System.out.println(threadMessage.timestampCr);
+        System.out.println(threadMessage.dataType +" "+ threadMessage.dataLenByte);
     }
 
     public JSONObject editJSONKey(JSONObject jsonObject){

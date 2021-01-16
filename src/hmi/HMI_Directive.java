@@ -12,7 +12,7 @@ import org.json.*;
  *  0x50    newUser_registered
  */
 
-public class ComMessage {
+public class HMI_Directive {
 
     //Fields
     private JSONObject header;
@@ -33,7 +33,7 @@ public class ComMessage {
 
     //TODO
     //Constructor
-    public ComMessage(JSONObject header, byte[] data) {
+    public HMI_Directive(JSONObject header, byte[] data) {
 
         this.header=header;
         this.data=data;
@@ -41,12 +41,12 @@ public class ComMessage {
     }
 
     //For Testing ONLY
-    public ComMessage(byte[] data) {
+    public HMI_Directive(byte[] data) {
         this.data=data;
     }
 
     //
-    public JSONObject extractHeaderIPC(ComMessage comMessage){
+    public JSONObject extractHeaderIPC(HMI_Directive HMIDirective){
 
         //extract JSONObject header and read keys
         JSONObject recHeader = new JSONObject();
