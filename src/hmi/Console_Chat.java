@@ -1,7 +1,5 @@
 package hmi;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -16,8 +14,8 @@ public class Console_Chat {
     private boolean run ;
 
     //jo851hil TODO
-    Message sendMessage;
-    Message receiveMessage;
+    ThreadMessage sendThreadMessage;
+    ThreadMessage receiveThreadMessage;
     HMI_utilities hmiUtils = new HMI_utilities();
 
     private String cmdHelp = "The following commands are available:" +
@@ -67,18 +65,17 @@ public class Console_Chat {
 
                     //jo851hil TODO tbd wie ReceiverID übernommen wird, diese müsste zuerst vom Storage bezogen werden
                     if(argMsg != "") {
-                        sendMessage = new Message(argUser,argMsg);
-                        sendMessage.createJSONFromMessage(); //Message class mit header (JSON) und data (byte[])
+                        sendThreadMessage = new ThreadMessage(argUser,argMsg);
+                        sendThreadMessage.createJSONFromMessage(); //Message class mit header (JSON) und data (byte[])
+                        sendThreadMessage.print();
                     //jo851hil TODO umwandeln von header und data in in byte[] und übergabe an comMessage constructor, zusätzlich comMessage header generieren
 
-                        ComMessage comMessage = new ComMessage(sendMessage.messageToByteArray(sendMessage));
-                        receiveMessage = hmiUtils.extractDataIPC(comMessage);
-                        receiveMessage.print();
+                        HMI_Directive HMIDirective = new HMI_Directive(sendThreadMessage.messageToByteArray(sendThreadMessage));
+                        receiveThreadMessage = hmiUtils.extractDataIPC(HMIDirective);
+                        receiveThreadMessage.print();
                     }
 
                     //send /view history
-                    Message message = new Message(argUser,argMsg);
-                    message.print();
                     /*System.out.println("Message:"+argMsg);
                     System.out.println("User:"+argUser);*/
                     //nach dem senden löschen

@@ -38,10 +38,10 @@ public class HMI_utilities {
     }
 
     //Create a Message Object from the comMessage byte[] data block
-    public Message extractDataIPC(ComMessage comMessage){
+    public ThreadMessage extractDataIPC(HMI_Directive HMIDirective){
 
         //Convert comMessage byte[] data block byte[] content and fill message object
-        Message recMessage = new Message();
+        ThreadMessage recThreadMessage = new ThreadMessage();
         JSONObject  messageJSON = null;
         byte[] comData;
         String comDataString;
@@ -53,7 +53,7 @@ public class HMI_utilities {
         //Split data into byte[] JSONHeader and  byte[] data, this would require an index
         //OR convert byte array to string, extract {..} for JSON section and use consecutive section as plaintext
 
-        comData = comMessage.getData();
+        comData = HMIDirective.getData();
         comDataString = BytesToString(comData);
 
         //Get last index of JSON String ('}'), Split comDataString at this index into two separate strings
@@ -73,12 +73,10 @@ public class HMI_utilities {
             System.out.println("Exception while creating JSONObject from comMessage");
         }
         //Give Message parameters to JSON
-        recMessage.createMessageFromJSON(messageJSON);
-        recMessage.setHeader(messageJSON);
-        recMessage.setContent(messageDataString.getBytes(StandardCharsets.UTF_8));
-        recMessage.setPlainTextContent(messageDataString);
+        recThreadMessage.createMessageFromJSON(messageJSON);
+        recThreadMessage.setContent(messageDataString.getBytes(StandardCharsets.UTF_8));
 
-        return recMessage;
+        return recThreadMessage;
     }
 
     //Returns the index of the last '}' char from a JSON string from a concatenated string
