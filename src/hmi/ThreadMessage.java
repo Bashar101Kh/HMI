@@ -141,11 +141,16 @@ public class ThreadMessage {
 
     public void createJSONFromMessage(){
         JSONObject argsJSON = new JSONObject();
+        JSONObject vclocksJSON = new JSONObject();
 
+        vclocksJSON.put("user",0);
+        vclocksJSON.put("device",0);
         argsJSON.put("path","dummy text");
+
         this.header.put("msgUuid",this.msgUuid);
         this.header.put("senderID",this.senderID);
         this.header.put("threadID",this.threadID);
+        this.header.put("vclocks",vclocksJSON);
         this.header.put("timestampHr",this.timestampHr);
         this.header.put("timestampMillis",this.timestampMillis);
         this.header.put("type",this.dataType);
