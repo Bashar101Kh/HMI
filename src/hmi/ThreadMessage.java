@@ -51,8 +51,7 @@ public class ThreadMessage {
         header = new JSONObject();
     }
 
-/*    //jo851hil TODO check if necessary
-    public Message(){
+/*    public Message(){
 
         msgID = hmiUtils.generateUUID();
         senderID = "Test_sender";
@@ -69,7 +68,7 @@ public class ThreadMessage {
         header = new JSONObject();
    }
 */
-    /*
+/*
     public ThreadMessage(String argThread, String argMsg){
 
         msgUuid = hmiUtils.generateUUID();
@@ -145,7 +144,7 @@ public class ThreadMessage {
     }
 
 
-    //TODO Message strukturiert ausdrucken
+    //Message strukturiert ausdrucken
     public void print() {
         System.out.println(this.senderID + "@" + this.timestampHr + ":\n"
                 + hmiUtils.BytesToString(content));
@@ -228,12 +227,12 @@ public class ThreadMessage {
     }
 
     //Generate  byte[] data block to hand over to the Directive
-    public byte[] messageToByteArray(ThreadMessage threadMessage){
+    public byte[] messageToByte(ThreadMessage threadMessage){
 
         byte[] json_data;
         byte[] message_data;
 
-        json_data = convertJSONToByte(threadMessage.header);
+        json_data = jsonToByte(threadMessage.header);
         message_data = threadMessage.content;
 
         byte[] combinedByteArray = new byte[json_data.length + message_data.length];
@@ -245,11 +244,12 @@ public class ThreadMessage {
         return data;
     }
 
-    public byte[] convertJSONToByte(JSONObject jObject){
+    //Convert JSONObject String to byte[]
+    public byte[] jsonToByte(JSONObject jsonObject){
 
         byte[] byteArray;
         HMI_utilities hmiUtil = new HMI_utilities();
-        byteArray = hmiUtil.StringToBytes(jObject.toString());
+        byteArray = hmiUtil.StringToBytes(jsonObject.toString());
         return byteArray;
     }
 
