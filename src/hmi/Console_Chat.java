@@ -24,10 +24,10 @@ public class Console_Chat {
 
     private String cmdHelp = "The following commands are available:" +
                              "\n-help : list all commands" +
-                             "\n-user : list all available contacts" +
-                             "\n-user [UserName] : open chat with user" +
-                             "\n-user [UserName] [plainText] : send plain text message to user" +
-                             "\n-m [plainText] : when a user chat is opened with '-user Username' a plainText message is sent" +
+                             "\n-thread [threadTopic] : opens the specified Thread" +
+                             "\n-thread [threadTopic] [msg:String] : send a String Message to the specified Thread" +
+                             "\n-userlist [LocalIP] : gets the availabe users on the specified IP adress" +
+                             "\n-newthread [threadTopic] [UserID] : creates a new Thread with the specified user"+
                              "\n-exit : close the program";
     //Constructor
     public Console_Chat(){
@@ -60,13 +60,16 @@ public class Console_Chat {
                     System.out.println(cmdHelp);
 
                 }else if (input.equals("-"+ cmds.newthread)){
-                    System.out.println("-");
+                    System.out.println("-newthread command erkannt");
+                    //TODO impliment cmd
 
                 }else if (input.equals("-"+ cmds.userlist)){
-                    System.out.println("-userlist");
+                    System.out.println("-userlist command erkannt");
+                    //TODO impliment cmd
 
                 }else if (input.equals("-"+ cmds.thread.toString())){
-                    System.out.println("-Thread command erkannt");
+                    System.out.println("-thread command erkannt");
+                    //TODO impliment cmd
                     String[] cmd_chunks = input.split(" ");
                     if (input.length() == 1){                                   // extract the cmd
                         System.out.println("you need to provide arguments");
