@@ -37,7 +37,6 @@ public class HMI_Directive {
 
         this.header=header;
         this.data=data;
-
     }
 
     //For Testing ONLY
@@ -52,9 +51,7 @@ public class HMI_Directive {
         JSONObject recHeader = new JSONObject();
 
         //TODO
-
         return recHeader;
-
     }
 
 
@@ -62,8 +59,3 @@ public class HMI_Directive {
 
 }
 
-
-/***
- * call
- * ComMessage comMessage = new ComMessage(sendMessage.getHeader(),sendMessage.getContent());
- ***/
