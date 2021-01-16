@@ -12,6 +12,7 @@ public class ThreadMessage {
     //Fields
     private String msgUuid;
     private String senderID;
+    private String senderName;
     private String threadID;
     private Date genDate;
     private long timestampMillis;
@@ -28,10 +29,11 @@ public class ThreadMessage {
 
     }
 
-    public ThreadMessage(String argThread, String argMsg){
+    public ThreadMessage(String argThread, String argMsg, String argSenderID, String argSenderName){
 
         msgUuid = hmiUtils.generateUUID();
-        senderID = "Test_sender";
+        senderID = argSenderID;
+        senderName = argSenderName;
         threadID = argThread;
         genDate = new Date();
         timestampMillis = genDate.getTime();
@@ -63,6 +65,25 @@ public class ThreadMessage {
         header = new JSONObject();
    }
 */
+    /*
+    public ThreadMessage(String argThread, String argMsg){
+
+        msgUuid = hmiUtils.generateUUID();
+        senderID = "Test_sender";
+        threadID = argThread;
+        genDate = new Date();
+        timestampMillis = genDate.getTime();
+        String pattern = "dd.MM.yy HH:mm";
+        SimpleDateFormat simpleDateFormat =
+                new SimpleDateFormat(pattern, new Locale("de", "DE"));
+        timestampHr = simpleDateFormat.format(genDate);
+        dataType = "text";
+        content = argMsg.getBytes(StandardCharsets.UTF_8);
+        dataLenByte=content.length;
+        header = new JSONObject();
+    }
+
+ */
     public String getMsgUuid(){
         return msgUuid;
     }
@@ -149,6 +170,7 @@ public class ThreadMessage {
 
         this.header.put("msgUuid",this.msgUuid);
         this.header.put("senderID",this.senderID);
+        this.header.put("senderName",this.senderName);
         this.header.put("threadID",this.threadID);
         this.header.put("vclocks",vclocksJSON);
         this.header.put("timestampHr",this.timestampHr);
@@ -162,6 +184,7 @@ public class ThreadMessage {
         if(jsonObject!=null) {
             this.msgUuid = jsonObject.getString("msgUuid");
             this.senderID = jsonObject.getString("senderID");
+            this.senderName = jsonObject.getString("sendereName");
             this.threadID = jsonObject.getString("threadID");
             this.timestampHr = jsonObject.getString("timestampHr");
             this.timestampMillis = jsonObject.getLong("timestampMillis");
@@ -172,7 +195,7 @@ public class ThreadMessage {
             System.out.println("Error in createMessageFromJSON: jsonObject = null");
     }
 
-    //Used to generate the byte[] data block to hand over to the comMessage
+    //Generate  byte[] data block to hand over to the Directive
     public byte[] messageToByteArray(ThreadMessage threadMessage){
 
         byte[] json_data;

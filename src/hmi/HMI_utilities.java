@@ -37,7 +37,6 @@ public class HMI_utilities {
         return uuidString;
     }
 
-
     //Returns the index of the last '}' char from a JSON string from a concatenated string
     public int getJSONIndexFromString(String input){
 

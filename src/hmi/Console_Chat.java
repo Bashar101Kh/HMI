@@ -14,6 +14,8 @@ public class Console_Chat {
     }
     //Fields
     private boolean run ;
+    private String currentUserID;
+    private String currentUserName;
 
     //jo851hil TODO
     ThreadMessage sendThreadMessage;
@@ -99,6 +101,7 @@ public class Console_Chat {
     }
 
     public static void clearScreen(){
+
         try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         } catch (InterruptedException e) {
@@ -106,5 +109,17 @@ public class Console_Chat {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void registerUser(){
+
+        System.out.println("Please enter your desired username");
+        Scanner scanner = new Scanner(System.in);
+
+        //check if input correct and in limitations
+        this.currentUserName = scanner.nextLine();
+        this.currentUserID  = hmiUtils.generateUUID();
+
+        //functionality to send data to STOR via Stream/Socket of Daemon-process
     }
 }
