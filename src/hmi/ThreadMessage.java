@@ -14,6 +14,7 @@ public class ThreadMessage {
     private String senderID;
     private String senderName;
     private String threadID;
+    private String threadName;
     private Date genDate;
     private long timestampMillis;
     private String timestampHr;
@@ -29,12 +30,13 @@ public class ThreadMessage {
 
     }
 
-    public ThreadMessage(String argThread, String argMsg, String argSenderID, String argSenderName){
+    public ThreadMessage(String argMsg, String argThreadID, String argThreadMessage, String argSenderID, String argSenderName){
 
         msgUuid = hmiUtils.generateUUID();
         senderID = argSenderID;
         senderName = argSenderName;
-        threadID = argThread;
+        threadID = argThreadID;
+        threadName = argThreadMessage;
         genDate = new Date();
         timestampMillis = genDate.getTime();
         String pattern = "dd.MM.yy HH:mm";
@@ -172,6 +174,7 @@ public class ThreadMessage {
         this.header.put("senderID",this.senderID);
         this.header.put("senderName",this.senderName);
         this.header.put("threadID",this.threadID);
+        this.header.put("threadName",this.threadName)
         this.header.put("vclocks",vclocksJSON);
         this.header.put("timestampHr",this.timestampHr);
         this.header.put("timestampMillis",this.timestampMillis);
@@ -186,6 +189,7 @@ public class ThreadMessage {
             this.senderID = jsonObject.getString("senderID");
             this.senderName = jsonObject.getString("sendereName");
             this.threadID = jsonObject.getString("threadID");
+            this.threadName = jsonObject.getString("threadName");
             this.timestampHr = jsonObject.getString("timestampHr");
             this.timestampMillis = jsonObject.getLong("timestampMillis");
             this.dataType = jsonObject.getString("type");
