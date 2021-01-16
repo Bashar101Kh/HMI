@@ -31,7 +31,6 @@ public class ThreadMessage {
     public ThreadMessage(){
 
     }
-
     public ThreadMessage(String argMsg, String argThreadID, String argThreadMessage, String argSenderID, String argSenderName){
 
         msgUuid = hmiUtils.generateUUID();
@@ -51,42 +50,7 @@ public class ThreadMessage {
         header = new JSONObject();
     }
 
-/*    public Message(){
-
-        msgID = hmiUtils.generateUUID();
-        senderID = "Test_sender";
-        receiverID = "Test_receiver";
-        genDate = new Date();
-        String pattern = "E dd.mm.yyyy HH:mm:ss.SSSZ";
-        SimpleDateFormat simpleDateFormat =
-                new SimpleDateFormat(pattern, new Locale("de", "DE"));
-        timestamp = simpleDateFormat.format(new Date());
-        dataType = "utf_8/text";
-        //plainTextContent = "";
-        content = argMsg.getBytes(StandardCharsets.UTF_8);
-        dataLenByte=content.length;
-        header = new JSONObject();
-   }
-*/
-/*
-    public ThreadMessage(String argThread, String argMsg){
-
-        msgUuid = hmiUtils.generateUUID();
-        senderID = "Test_sender";
-        threadID = argThread;
-        genDate = new Date();
-        timestampMillis = genDate.getTime();
-        String pattern = "dd.MM.yy HH:mm";
-        SimpleDateFormat simpleDateFormat =
-                new SimpleDateFormat(pattern, new Locale("de", "DE"));
-        timestampHr = simpleDateFormat.format(genDate);
-        dataType = "text";
-        content = argMsg.getBytes(StandardCharsets.UTF_8);
-        dataLenByte=content.length;
-        header = new JSONObject();
-    }
-
- */
+    //Get and Set Methods
     public String getMsgUuid(){
         return msgUuid;
     }
