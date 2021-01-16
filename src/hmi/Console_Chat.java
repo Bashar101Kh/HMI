@@ -54,8 +54,14 @@ public class Console_Chat {
                 // boolean a ? [if true]statment1 : [if false]statment 2 ;
                 // -m [userName] [Message]
                 // -user -[userName]
-                if(input.equals("-"+ cmds.help.toString())){
+                if(input.equals("-"+ cmds.help)){
                     System.out.println(cmdHelp);
+
+                }else if (input.equals("-"+ cmds.newthread)){
+                    System.out.println("-");
+
+                }else if (input.equals("-"+ cmds.userlist)){
+                    System.out.println("-userlist");
 
                 }else if (input.equals("-"+ cmds.thread.toString())){
                     System.out.println("-Thread command erkannt");
@@ -79,10 +85,10 @@ public class Console_Chat {
                         argMsg = "";
                     }
 
-                }else if (input.equals("-"+ cmds.clear.toString())){
+                }else if (input.equals("-"+ cmds.clear)){
                     clearScreen();
 
-                }else if (input.equals("-"+ cmds.exit.toString())){
+                }else if (input.equals("-"+ cmds.exit)){
                     System.out.println("quitting..");
                     run = false;
                 }else {
