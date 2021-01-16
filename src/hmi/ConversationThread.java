@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 public class ConversationThread {
     //Fields
-    ArrayList<String> membersIDs;
-    ArrayList<Message> msgHistory;
-    
+
+    private ArrayList<String> membersIDs;
+    private ArrayList<ThreadMessage> msgHistory;
+
+    private String ui ;
 }
