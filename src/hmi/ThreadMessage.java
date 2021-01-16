@@ -154,7 +154,6 @@ public class ThreadMessage {
 
     }
 
-
     public void createJSONFromMessage(){
         JSONObject argsJSON = new JSONObject();
         JSONObject vclocksJSON = new JSONObject();
@@ -240,8 +239,9 @@ public class ThreadMessage {
         buff.put(json_data);
         buff.put(message_data);
         byte[] data = buff.array();
-    }
+
         return data;
+    }
     public byte[] convertJSONToByte(JSONObject jObject){
 
         byte[] byteArray;
