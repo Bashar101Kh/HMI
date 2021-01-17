@@ -148,7 +148,7 @@ public class ThreadMessage {
     }
 
     //Create a Message Object from the comMessage byte[] data block
-    public void genThreadMessageFromHmiDirectory(HMI_Directive hmiDirective){
+    public void genThreadMessageFromHmiDirective(HMI_Directive hmiDirective){
 
         JSONObject  messageJSON = null;
         byte[] dirData;
