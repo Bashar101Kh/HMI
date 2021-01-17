@@ -1,6 +1,8 @@
 package hmi;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class Console_Chat {
@@ -16,6 +18,8 @@ public class Console_Chat {
     private boolean run ;
     private String currentUserID;
     private String currentUserName;
+    private ArrayList<ConversationThread> threads = new ArrayList<ConversationThread>();
+    Iterator<ConversationThread> it = threads.iterator();
 
     //jo851hil TODO
     ThreadMessage sendThreadMessage;
@@ -47,69 +51,73 @@ public class Console_Chat {
         Scanner scanner = new Scanner(System.in);
         while (run){
             input = scanner.nextLine();
+            len = input.length();
             if (!input.isEmpty()){
-                len = input.length();
-            }else{
-                System.out.println("empty input !");
 
-            }
-                // boolean a ? [if true]statment1 : [if false]statment 2 ;
-                // -m [userName] [Message]
-                // -user -[userName]
                 if(input.equals("-"+cmds.help)){
                     System.out.println(cmdHelp);
-                //len >= cmds[0].length() ? input.substring(0,cmds[0].length()).equals(cmds[0]) : false
-                }else if (len >= cmds.newthread.toString().length() ? input.substring(1,cmds.newthread.toString().length()+1).equals(cmds.newthread.toString()) :false ){
+                    //len >= cmds[0].length() ? input.substring(0,cmds[0].length()).equals(cmds[0]) : false
+                }else if (len >= cmds.newthread.toString().length() + 1 && input.substring(1, cmds.newthread.toString().length() + 1).equals(cmds.newthread.toString())){
                     System.out.println("-newthread command erkannt");
                     //TODO impliment cmd
                     String[] cmd_chunks = input.split(" ");
                     if (cmd_chunks.length == 3 ){                 // create thread
                         ConversationThread conversationThread = new ConversationThread(cmd_chunks[1],"currentUser",cmd_chunks[2]);
+                        threads.add(conversationThread);
                         conversationThread.open();
-                    }else System.out.println("wrong arguments");
 
-                }else if (input.equals("-"+ cmds.userlist)){
+                    }else {
+                        System.out.println("wrong arguments");
+                    }
+
+                }else if (len >= cmds.userlist.toString().length() + 1 && input.substring(1, cmds.userlist.toString().length() + 1).equals(cmds.userlist.toString())){
                     System.out.println("-userlist command erkannt");
                     //TODO impliment cmd
 
-                }else if (input.equals("-"+ cmds.thread)){
+                }else if (len >= cmds.thread.toString().length()+1 && input.substring(1, cmds.thread.toString().length() + 1).equals(cmds.thread.toString())){
                     System.out.println("-thread command erkannt");
-                    //TODO impliment cmd
                     String[] cmd_chunks = input.split(" ");
-                    if (input.length() == 1){                                   // extract the cmd
-                        System.out.println("you need to provide arguments");
-                        break;
-                    }
-                    if (input.length() == 2){                                   // extract arg1
+                    /*if (cmd_chunks.length == 2 ){
                         argThreadTopic = cmd_chunks[1];
-                        System.out.println("argThreadTopic: "+argThreadTopic);
-                        //TODO concret implemntation
-                    }
-                    if (cmd_chunks.length>2) {                                   // combine the rest as arg2
-                        for (int i = 2; i < cmd_chunks.length; i++) {
-                            argMsg += (i != cmd_chunks.length - 1) ? (cmd_chunks[i] + " ") : (cmd_chunks[i]);
+                        boolean threadFound = false;
+                        while(it.hasNext()){
+                            ConversationThread con = it.next();
+                            if(con.getName().equals(argThreadTopic)){
+                                threadFound = true;
+                                con.open();
+                                break;
+                            }
                         }
-                        //TODO concret implemntation
-
-                        argThreadTopic = "";
-                        argMsg = "";
+                        if (!threadFound){
+                            System.out.println("the specified thread could not be found !");
+                        }
+                    }*/
+                    if (cmd_chunks.length == 3){
+                        System.out.println("-thread [topic] [user] not implemented jet");
                     }
 
-                }else if (input.equals("-"+ cmds.clear)){
-                    clearScreen();
-
+                    argThreadTopic = "";
+                    argMsg = "";
                 }else if (input.equals("-"+ cmds.exit)){
                     System.out.println("quitting..");
                     run = false;
+                }else if (input.equals("-"+ cmds.clear)){
+                    clearScreen();
+
                 }else {
                     System.out.println("Default");
                 }
                 input = null;
+            }else{
+                System.out.println("empty input !");
+
+            }
+
         }
     }
 
     public static void clearScreen(){
-
+        System.out.println("tesssssssssssssssssssssssssssssssst");
         try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         } catch (InterruptedException e) {
