@@ -17,7 +17,7 @@ public class ThreadMessage {
     private String threadName;
     private Date genDate;
     private long timestampMillis;
-    private String timestampHr;
+    private String timestamp;
     private String type;
     private int dataLenByte;
 
@@ -40,10 +40,10 @@ public class ThreadMessage {
         threadName = argThreadMessage;
         genDate = new Date();
         timestampMillis = genDate.getTime();
-        String pattern = "dd.MM.yy HH:mm";
+        String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
         SimpleDateFormat simpleDateFormat =
                 new SimpleDateFormat(pattern, new Locale("de", "DE"));
-        timestampHr = simpleDateFormat.format(genDate);
+        timestamp = simpleDateFormat.format(genDate);
         type = "text";
         content = argMsg.getBytes(StandardCharsets.UTF_8);
         dataLenByte=content.length;
@@ -63,8 +63,8 @@ public class ThreadMessage {
     public Date getGenDate(){
         return genDate;
     }
-    public String getTimestampHr() {
-        return timestampHr;
+    public String getTimestamp() {
+        return timestamp;
     }
     public String getType(){
         return type;
@@ -91,8 +91,8 @@ public class ThreadMessage {
     public void setGenDate(Date genDate) {
         this.genDate = genDate;
     }
-    public void setTimestampHr(String timestampHr) {
-        this.timestampHr = timestampHr;
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
     public void setType(String type) {
         this.type = type;
@@ -110,7 +110,7 @@ public class ThreadMessage {
 
     //Message strukturiert ausdrucken
     public void print() {
-        System.out.println(this.senderID + "@" + this.timestampHr + ":\n"
+        System.out.println(this.senderID + "@" + this.timestamp + ":\n"
                 + hmiUtils.bytesToString(content));
     }
 
@@ -121,10 +121,7 @@ public class ThreadMessage {
 
     public void createJSONFromMessage(){
         JSONObject argsJSON = new JSONObject();
-        JSONObject vclocksJSON = new JSONObject();
 
-        vclocksJSON.put("user",0);
-        vclocksJSON.put("device",0);
         argsJSON.put("path","dummy text");
 
         this.header.put("msgUuid",this.msgUuid);
@@ -132,8 +129,7 @@ public class ThreadMessage {
         this.header.put("senderName",this.senderName);
         this.header.put("threadID",this.threadID);
         this.header.put("threadName",this.threadName);
-        this.header.put("vclocks",vclocksJSON);
-        this.header.put("timestampHr",this.timestampHr);
+        this.header.put("timestamp",this.timestamp);
         this.header.put("timestampMillis",this.timestampMillis);
         this.header.put("type",this.type);
         this.header.put("args",argsJSON);
@@ -144,10 +140,10 @@ public class ThreadMessage {
         if(jsonObject!=null) {
             this.msgUuid = jsonObject.getString("msgUuid");
             this.senderID = jsonObject.getString("senderID");
-            this.senderName = jsonObject.getString("sendereName");
+            this.senderName = jsonObject.getString("senderName");
             this.threadID = jsonObject.getString("threadID");
             this.threadName = jsonObject.getString("threadName");
-            this.timestampHr = jsonObject.getString("timestampHr");
+            this.timestamp = jsonObject.getString("timestamp");
             this.timestampMillis = jsonObject.getLong("timestampMillis");
             this.type = jsonObject.getString("type");
             this.header = jsonObject;
