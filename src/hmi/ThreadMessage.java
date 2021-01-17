@@ -12,9 +12,9 @@ public class ThreadMessage {
     //Fields
     private String msgUuid;
     private String senderID;
-    private String senderName;
+    private String senderName; //jo851hil: currently for test purposes only TODO export senderName to User class; Implement functionality to share & store User class
     private String threadID;
-    private String threadName;
+    private String threadName; //jo851hil: currently for test purposes only TODO export threadName to Thread class; Implement functionality to share & store Thread class
     private Date genDate;
     private long timestampMillis;
     private String timestamp;
