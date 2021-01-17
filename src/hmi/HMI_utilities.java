@@ -19,7 +19,7 @@ public class HMI_utilities {
         return byteArray;
     }
 
-    public static String bytesToString(byte[] byteArray) {
+    public static String byteToString(byte[] byteArray) {
 
         Charset charset = StandardCharsets.UTF_8;
         String string = charset.decode(ByteBuffer.wrap(byteArray))
