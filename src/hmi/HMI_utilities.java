@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class HMI_utilities {
 
-    public byte[] stringToBytes(String inputString){
+    public static byte[] stringToBytes(String inputString){
 
         Charset charset = StandardCharsets.UTF_8;
         byte[] byteArray = inputString.getBytes(charset);
@@ -19,7 +19,7 @@ public class HMI_utilities {
         return byteArray;
     }
 
-    public String bytesToString(byte[] byteArray) {
+    public static String bytesToString(byte[] byteArray) {
 
         Charset charset = StandardCharsets.UTF_8;
         String string = charset.decode(ByteBuffer.wrap(byteArray))
@@ -28,7 +28,7 @@ public class HMI_utilities {
         return string;
     }
 
-    public String generateUUID(){
+    public static String generateUUID(){
 
         String uuidString;
         UUID uuid = UUID.randomUUID();
@@ -38,7 +38,7 @@ public class HMI_utilities {
     }
 
     //Returns the index of the last '}' char from a JSON string from a concatenated string
-    public int getJSONIndexFromString(String input){
+    public static int getJSONIndexFromString(String input){
 
         int counter = 0;
         int i,n=0;

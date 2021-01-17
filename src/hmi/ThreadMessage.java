@@ -25,15 +25,10 @@ public class ThreadMessage {
     private JSONObject header;
     private byte[] content;
 
-    HMI_utilities hmiUtils = new HMI_utilities();
-
     //Constructor
-    public ThreadMessage(){
-
-    }
     public ThreadMessage(String argMsg, String argThreadID, String argThreadMessage, String argSenderID, String argSenderName){
 
-        msgUuid = hmiUtils.generateUUID();
+        msgUuid = HMI_utilities.generateUUID();
         senderID = argSenderID;
         senderName = argSenderName;
         threadID = argThreadID;
@@ -111,7 +106,7 @@ public class ThreadMessage {
     //Message strukturiert ausdrucken
     public void print() {
         System.out.println(this.senderID + "@" + this.timestamp + ":\n"
-                + hmiUtils.bytesToString(content));
+                + HMI_utilities.bytesToString(content));
     }
 
     //TODO Message an Directive übergeben, ggf. methodenaufruf um an socket zu übergeben, tbd
@@ -164,10 +159,10 @@ public class ThreadMessage {
 
         //Get data and convert data byte array to string
         dirData = hmiDirective.getData();
-        dirDataString = hmiUtils.bytesToString(dirData);
+        dirDataString = HMI_utilities.bytesToString(dirData);
 
         //Get last index of JSON String ('}'), Split dirDataString at this index into two separate strings
-        arrayPos = hmiUtils.getJSONIndexFromString(dirDataString);
+        arrayPos = HMI_utilities.getJSONIndexFromString(dirDataString);
         threadMessageHeaderString = dirDataString.substring(0,arrayPos+1);
         //TODO if empty byte array is sent, make sure no null string is read
         threadMessageDataString = dirDataString.substring(arrayPos+1,dirDataString.length());
@@ -208,8 +203,7 @@ public class ThreadMessage {
     public byte[] jsonToByte(JSONObject jsonObject){
 
         byte[] byteArray;
-        HMI_utilities hmiUtil = new HMI_utilities();
-        byteArray = hmiUtil.stringToBytes(jsonObject.toString());
+        byteArray = HMI_utilities.stringToBytes(jsonObject.toString());
         return byteArray;
     }
 

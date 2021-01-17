@@ -24,7 +24,6 @@ public class Console_Chat {
     //jo851hil TODO
     ThreadMessage sendThreadMessage;
     ThreadMessage receiveThreadMessage;
-    HMI_utilities hmiUtils = new HMI_utilities();
 
     private String cmdHelp = "The following commands are available:" +
                              "\n-help : list all commands" +
@@ -134,7 +133,7 @@ public class Console_Chat {
 
         //check if input correct and in limitations
         this.currentUserName = scanner.nextLine();
-        this.currentUserID  = hmiUtils.generateUUID();
+        this.currentUserID  = HMI_utilities.generateUUID();
 
         //functionality to send data to STOR via Stream/Socket of Daemon-process
     }
