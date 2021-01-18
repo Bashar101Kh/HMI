@@ -15,10 +15,15 @@ public class Console_Chat {
         userlist,
     }
     //Fields
+    //****************************************************
+    //Only for testing
+    private ArrayList<HMI_ConversationThread> a_threads = new ArrayList<HMI_ConversationThread>();
+    private Iterator<HMI_ConversationThread> it = a_threads.iterator();
+    //****************************************************
     private boolean run ;
     private User currentUser ;
-    private ArrayList<HMI_ConversationThread> threads = new ArrayList<HMI_ConversationThread>();
-    Iterator<HMI_ConversationThread> it = threads.iterator();
+    private static HMI_ConversationThread currentThread;
+
 
     //jo851hil TODO
     HMI_ThreadMessage sendHMIThreadMessage;
@@ -44,7 +49,9 @@ public class Console_Chat {
         argThreadTopic = "";
         argMsg = "";
         int len = 0 ;
-        System.out.println("Welcome Bla Bla .. ");
+        System.out.println("Welcome "+currentUser.getName()+"\n"+
+                            "uuid: "+currentUser.getUuid()+"\n"+
+                            "uniqueName: "+currentUser.getUniqueName());
 
         Scanner scanner = new Scanner(System.in);
         while (run){
@@ -61,7 +68,8 @@ public class Console_Chat {
                     String[] cmd_chunks = input.split(" ");
                     if (cmd_chunks.length == 3 ){                 // create thread
                         HMI_ConversationThread HMIConversationThread = new HMI_ConversationThread(cmd_chunks[1],"currentUser",cmd_chunks[2]);
-                        threads.add(HMIConversationThread);
+                        a_threads.add(HMIConversationThread);
+                        currentThread = HMIConversationThread;
                         HMIConversationThread.open();
 
                     }else {
@@ -75,21 +83,20 @@ public class Console_Chat {
                 }else if (len >= cmds.thread.toString().length()+1 && input.substring(1, cmds.thread.toString().length() + 1).equals(cmds.thread.toString())){
                     System.out.println("-thread command erkannt");
                     String[] cmd_chunks = input.split(" ");
-                    /*if (cmd_chunks.length == 2 ){
+                    if (cmd_chunks.length == 2 ){
                         argThreadTopic = cmd_chunks[1];
                         boolean threadFound = false;
-                        while(it.hasNext()){
-                            HMI_ConversationThread con = it.next();
-                            if(con.getName().equals(argThreadTopic)){
+                        for (int i = 0 ; i < a_threads.size(); i++){
+                            if(a_threads.get(i).getName().equals(argThreadTopic)){
+                                a_threads.get(i).open();
                                 threadFound = true;
-                                con.open();
                                 break;
                             }
                         }
                         if (!threadFound){
                             System.out.println("the specified thread could not be found !");
                         }
-                    }*/
+                    }
                     if (cmd_chunks.length == 3){
                         System.out.println("-thread [topic] [user] not implemented jet");
                     }
@@ -115,7 +122,6 @@ public class Console_Chat {
     }
 
     public static void clearScreen(){
-        System.out.println("tesssssssssssssssssssssssssssssssst");
         try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         } catch (InterruptedException e) {
