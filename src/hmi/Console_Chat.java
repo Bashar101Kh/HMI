@@ -167,7 +167,8 @@ public class Console_Chat {
                 "\nThe test ThreadMessage will be setup automatically with all fields and a dummy text message." +
                 "\nPrinting the test ThreadMessage yields the following result (please note that printing the UUID and a formatted date is not part of current message feature):\n");
         testSendMessage.print();
-        System.out.println("\nPlease provide the cmd in form of a formatted JSON, for example: {\"cmd\":\"example\",\"id\":\"1\",\"args\":{\"args1\":\"none\"}}");
+        System.out.println("\nThe destination (STOR,SYNC) needs to be provided (functionality will be added at a later point) and cmd header needs to be provided." +
+                "Please provide the cmd in form of a formatted JSON, for example: {\"cmd\":\"example\",\"id\":\"1\",\"args\":{\"args1\":\"none\"}}");
         Scanner sc = new Scanner(System.in);
         String userInput = sc.nextLine();
         try {

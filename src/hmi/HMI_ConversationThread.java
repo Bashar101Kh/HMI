@@ -31,7 +31,6 @@ public class HMI_ConversationThread {
         membersIDs.add(currentUser);
         membersIDs.add(user);
         this.name = topic;
-
     }
 
     public void open(){
