@@ -23,11 +23,15 @@ public class Console_Chat {
     //Only for testing
     private ArrayList<HMI_ConversationThread> a_threads = new ArrayList<HMI_ConversationThread>();
     private Iterator<HMI_ConversationThread> it = a_threads.iterator();
+    private HMI_User test_receiver = new HMI_User();
     //****************************************************
     private boolean run ;
-    private HMI_User currentHMIUser;
+    static private HMI_User currentHMIUser;
     private static HMI_ConversationThread currentThread;
 
+    public static HMI_User getCurrentHMIUser() {
+        return currentHMIUser;
+    }
 
     //jo851hil TODO
     HMI_ThreadMessage sendHMIThreadMessage;
@@ -71,7 +75,7 @@ public class Console_Chat {
                     //TODO impliment cmd
                     String[] cmd_chunks = input.split(" ");
                     if (cmd_chunks.length == 3 ){                 // create thread
-                        HMI_ConversationThread HMIConversationThread = new HMI_ConversationThread(cmd_chunks[1],"currentHMIUser",cmd_chunks[2]);
+                        HMI_ConversationThread HMIConversationThread = new HMI_ConversationThread(cmd_chunks[1],currentHMIUser,test_receiver);
                         a_threads.add(HMIConversationThread);
                         currentThread = HMIConversationThread;
                         HMIConversationThread.open();

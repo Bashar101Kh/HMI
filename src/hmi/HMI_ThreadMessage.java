@@ -10,6 +10,7 @@ import org.json.*;
 public class HMI_ThreadMessage {
 
     //Fields
+    private HMI_User sender;
     private String msgUuid;
     private String senderID;
     private String senderName; //jo851hil: currently for test purposes only TODO export senderName to HMI_User class; Implement functionality to share & store HMI_User class
@@ -51,6 +52,7 @@ public class HMI_ThreadMessage {
     public HMI_ThreadMessage(String argMsg){
 
         msgUuid = HMI_utilities.generateUUID();
+        sender = Console_Chat.getCurrentHMIUser();
         senderID = "3194345f-5e53-4ae0-8d58-caba45866413";
         senderName = "testSender";
         threadID = "bb008d13-66cc-432f-ab75-f5010eef9163";
@@ -130,8 +132,9 @@ public class HMI_ThreadMessage {
 
     //Message strukturiert ausdrucken
     public void print() {
-        System.out.println(this.senderID + "@" + this.timestamp + ":\n"
+        System.out.println(this.sender.getName() + "@" + this.timestamp + ":\n"
                 + HMI_utilities.byteToString(content));
+        System.out.println("");
     }
 
     //TODO Message an Directive übergeben, ggf. methodenaufruf um an socket zu übergeben, tbd

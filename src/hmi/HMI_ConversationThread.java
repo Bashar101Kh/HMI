@@ -12,8 +12,9 @@ public class HMI_ConversationThread {
     //Fields
     private String name ;
     private UUID uuid;
-    private ArrayList<String> membersIDs = new ArrayList<String>();
+    private ArrayList<HMI_User> membersIDs = new ArrayList<HMI_User>();
     private ArrayList<HMI_ThreadMessage> msgHistory = new ArrayList<HMI_ThreadMessage>();
+
 
     private String ui ;
 
@@ -27,10 +28,18 @@ public class HMI_ConversationThread {
     }
 
     //Constructor
-    public HMI_ConversationThread(String topic, String currentUser, String user){
+    public HMI_ConversationThread(String topic, HMI_User currentUser, HMI_User user){
         membersIDs.add(currentUser);
         membersIDs.add(user);
         this.name = topic;
+        //*************************
+        // adding dummy data to the
+        // msgHistory only for testing!
+        //*************************
+        for(int i = 0; i< 10;i++){
+            msgHistory.add(new HMI_ThreadMessage(Integer.toString(i)+" blablabla"));
+        }
+        //*************************
 
     }
 
@@ -39,8 +48,15 @@ public class HMI_ConversationThread {
         System.out.println("****************************************************\n* "+
                            this.name+
                            "\n****************************************************");
+        for(int i = 0 ; i< msgHistory.size(); i++){
+            msgHistory.get(i).print();
+        }
     }
 
+    // append Method should only be used for testing
+    // later it must be done over Storage
+    // when a new msg is inputed by the user the we inform
+    // storage and request the new History list of the thread
     public void append(HMI_ThreadMessage m){
         msgHistory.add(m);
     }

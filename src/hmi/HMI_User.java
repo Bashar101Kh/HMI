@@ -33,6 +33,11 @@ public class HMI_User {
         return friends;
     }
     //Constructors
+    public HMI_User(){
+        this.name = "dummyUnser";
+        uuid = UUID.randomUUID();
+        uniqueName = uniqueName = name+"#"+uuid.toString().substring(0,4);
+    }
     public HMI_User(String name){
         this.name = name;
         uuid = UUID.randomUUID();
