@@ -26,6 +26,8 @@ public class HMI_ThreadMessage {
     private byte[] content;
 
     //Constructor
+    public HMI_ThreadMessage(){
+    }
     public HMI_ThreadMessage(String argMsg, String argThreadID, String argThreadMessage, String argSenderID, String argSenderName){
 
         msgUuid = HMI_utilities.generateUUID();
@@ -205,13 +207,13 @@ public class HMI_ThreadMessage {
     }
 
     //Generate  byte[] data block to hand over to the Directive
-    public byte[] messageToByte(HMI_ThreadMessage HMIThreadMessage){
+    public byte[] messageToByte(){
 
         byte[] json_data;
         byte[] message_data;
 
-        json_data = jsonToByte(HMIThreadMessage.header);
-        message_data = HMIThreadMessage.content;
+        json_data = jsonToByte(this.header);
+        message_data = this.content;
 
         byte[] combinedByteArray = new byte[json_data.length + message_data.length];
         ByteBuffer buff = ByteBuffer.wrap(combinedByteArray);
