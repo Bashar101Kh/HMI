@@ -1,5 +1,8 @@
 package hmi;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,6 +16,7 @@ public class Console_Chat {
         clear,
         thread,
         userlist,
+        test,
     }
     //Fields
     //****************************************************
@@ -80,29 +84,33 @@ public class Console_Chat {
                     System.out.println("-userlist command erkannt");
                     //TODO impliment cmd
 
-                }else if (len >= cmds.thread.toString().length()+1 && input.substring(1, cmds.thread.toString().length() + 1).equals(cmds.thread.toString())){
+                }else if (len >= cmds.thread.toString().length()+1 && input.substring(1, cmds.thread.toString().length() + 1).equals(cmds.thread.toString())) {
                     System.out.println("-thread command erkannt");
                     String[] cmd_chunks = input.split(" ");
-                    if (cmd_chunks.length == 2 ){
+                    if (cmd_chunks.length == 2) {
                         argThreadTopic = cmd_chunks[1];
                         boolean threadFound = false;
-                        for (int i = 0 ; i < a_threads.size(); i++){
-                            if(a_threads.get(i).getName().equals(argThreadTopic)){
+                        for (int i = 0; i < a_threads.size(); i++) {
+                            if (a_threads.get(i).getName().equals(argThreadTopic)) {
                                 a_threads.get(i).open();
                                 threadFound = true;
                                 break;
                             }
                         }
-                        if (!threadFound){
+                        if (!threadFound) {
                             System.out.println("the specified thread could not be found !");
                         }
                     }
-                    if (cmd_chunks.length == 3){
+                    if (cmd_chunks.length == 3) {
                         System.out.println("-thread [topic] [user] not implemented jet");
                     }
 
                     argThreadTopic = "";
                     argMsg = "";
+                }else if (len >= cmds.test.toString().length() + 1 && input.substring(1, cmds.test.toString().length() + 1).equals(cmds.test.toString())) {
+                    test();
+
+
                 }else if (input.equals("-"+ cmds.exit)){
                     System.out.println("quitting..");
                     run = false;
@@ -142,5 +150,38 @@ public class Console_Chat {
     }
     public void UserInit(){
 
+    }
+
+    public void test(){
+
+        byte[] messageInByte;
+        String testMsg = "A string meant for testing, because testing is fun.";
+        JSONObject testCmd;
+        HMI_ThreadMessage testSendMessage = new HMI_ThreadMessage(testMsg);
+        HMI_ThreadMessage testReceiveMessage = new HMI_ThreadMessage();
+        HMI_Directive testDirective;
+        messageInByte = testSendMessage.messageToByte();
+        System.out.println("\n----------Start of testing procedure----------\n");
+
+        System.out.println("Test: Send a directive via stream socket." +
+                "\nThe test ThreadMessage will be setup automatically with all fields and a dummy text message." +
+                "\nPrinting the test ThreadMessage yields the following result (please note that printing the UUID and a formatted date is not part of current message feature):\n");
+        testSendMessage.print();
+        System.out.println("\nPlease provide the cmd in form of a formatted JSON, for example: {\"cmd\":\"example\",\"id\":\"1\",\"args\":{\"args1\":\"none\"}}");
+        Scanner sc = new Scanner(System.in);
+        String userInput = sc.nextLine();
+        try {
+            testCmd = new JSONObject(userInput);
+            System.out.println("Passing "+testCmd.toString()+" as JSON to the directive.");
+            testDirective = new HMI_Directive(testCmd,messageInByte);
+            //TODO Send Directive via Stream, write method for Receive Directive deconstruction into ThreadMessage
+            System.out.println("\nCurrently no socket/stream is being used to transfer this HMI_Directive. It is simply deconstructed back into a ThreadMessage.");
+            testReceiveMessage.getThreadMessageFromHmiDirective(testDirective);
+            System.out.println("\nPrinting the deconstructed ThreadMessage\n");
+            testReceiveMessage.print();
+            System.out.println("\n----------End of testing procedure----------\n\n");
+        }catch(JSONException err){
+            System.out.println("Incorrectly formatted JSONObject.");
+        }
     }
 }
