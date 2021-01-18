@@ -30,11 +30,16 @@ public class ConversationThread {
         this.name = topic;
 
     }
+
     public void open(){
         Console_Chat.clearScreen();
         System.out.println("****************************************************\n* "+
                            this.name+
                            "\n****************************************************");
+    }
+
+    public void append(HMI_ThreadMessage m){
+        msgHistory.add(m);
     }
 
 }
