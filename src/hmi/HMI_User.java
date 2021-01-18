@@ -1,11 +1,9 @@
 package hmi;
 
-import jdk.dynalink.linker.ConversionComparator;
-
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class User {
+public class HMI_User {
 
 
     //Fields
@@ -13,7 +11,7 @@ public class User {
     private String uniqueName;
     private UUID uuid;
     private ArrayList<HMI_ConversationThread> threads = new ArrayList<HMI_ConversationThread>();
-    private ArrayList<User> friends = new ArrayList<User>();
+    private ArrayList<HMI_User> friends = new ArrayList<HMI_User>();
     //getters
     public String getName() {
         return name;
@@ -31,11 +29,11 @@ public class User {
         return threads;
     }
 
-    public ArrayList<User> getFriends() {
+    public ArrayList<HMI_User> getFriends() {
         return friends;
     }
     //Constructors
-    public User(String name){
+    public HMI_User(String name){
         this.name = name;
         uuid = UUID.randomUUID();
         uniqueName = name+"#"+uuid.toString().substring(0,4);

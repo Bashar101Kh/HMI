@@ -25,7 +25,7 @@ public class Console_Chat {
     private Iterator<HMI_ConversationThread> it = a_threads.iterator();
     //****************************************************
     private boolean run ;
-    private User currentUser ;
+    private HMI_User currentHMIUser;
     private static HMI_ConversationThread currentThread;
 
 
@@ -53,9 +53,9 @@ public class Console_Chat {
         argThreadTopic = "";
         argMsg = "";
         int len = 0 ;
-        System.out.println("Welcome "+currentUser.getName()+"\n"+
-                            "uuid: "+currentUser.getUuid()+"\n"+
-                            "uniqueName: "+currentUser.getUniqueName());
+        System.out.println("Welcome "+ currentHMIUser.getName()+"\n"+
+                            "uuid: "+ currentHMIUser.getUuid()+"\n"+
+                            "uniqueName: "+ currentHMIUser.getUniqueName());
 
         Scanner scanner = new Scanner(System.in);
         while (run){
@@ -71,7 +71,7 @@ public class Console_Chat {
                     //TODO impliment cmd
                     String[] cmd_chunks = input.split(" ");
                     if (cmd_chunks.length == 3 ){                 // create thread
-                        HMI_ConversationThread HMIConversationThread = new HMI_ConversationThread(cmd_chunks[1],"currentUser",cmd_chunks[2]);
+                        HMI_ConversationThread HMIConversationThread = new HMI_ConversationThread(cmd_chunks[1],"currentHMIUser",cmd_chunks[2]);
                         a_threads.add(HMIConversationThread);
                         currentThread = HMIConversationThread;
                         HMIConversationThread.open();
@@ -145,7 +145,7 @@ public class Console_Chat {
         Scanner scanner = new Scanner(System.in);
 
         //check if input correct and in limitations
-        currentUser = new User(scanner.nextLine());
+        currentHMIUser = new HMI_User(scanner.nextLine());
         //functionality to send data to STOR via Stream/Socket of Daemon-process
     }
     public void UserInit(){
