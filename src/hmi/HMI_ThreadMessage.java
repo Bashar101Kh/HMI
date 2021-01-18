@@ -45,6 +45,29 @@ public class HMI_ThreadMessage {
         header = new JSONObject();
     }
 
+    //Constructor for testing
+    public HMI_ThreadMessage(String argMsg){
+
+        msgUuid = HMI_utilities.generateUUID();
+        senderID = "3194345f-5e53-4ae0-8d58-caba45866413";
+        senderName = "testSender";
+        threadID = "bb008d13-66cc-432f-ab75-f5010eef9163";
+        threadName = "testThread";
+        genDate = new Date();
+        timestampMillis = genDate.getTime();
+        String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
+        SimpleDateFormat simpleDateFormat =
+                new SimpleDateFormat(pattern, new Locale("de", "DE"));
+        timestamp = simpleDateFormat.format(genDate);
+        type = "text";
+        content = argMsg.getBytes(StandardCharsets.UTF_8);
+        dataLenByte=content.length;
+        header = new JSONObject();
+        createJSONFromMessage();
+
+    }
+
+
     //Get and Set Methods
     public String getMsgUuid(){
         return msgUuid;
@@ -117,7 +140,7 @@ public class HMI_ThreadMessage {
     public void createJSONFromMessage(){
         JSONObject argsJSON = new JSONObject();
 
-        argsJSON.put("path","dummy text");
+        argsJSON.put("path","/dummy/path");
 
         this.header.put("msgUuid",this.msgUuid);
         this.header.put("senderID",this.senderID);
