@@ -18,8 +18,8 @@ public class Console_Chat {
     private boolean run ;
     private String currentUserID;
     private String currentUserName;
-    private ArrayList<ConversationThread> threads = new ArrayList<ConversationThread>();
-    Iterator<ConversationThread> it = threads.iterator();
+    private ArrayList<HMI_ConversationThread> threads = new ArrayList<HMI_ConversationThread>();
+    Iterator<HMI_ConversationThread> it = threads.iterator();
 
     //jo851hil TODO
     HMI_ThreadMessage sendHMIThreadMessage;
@@ -61,9 +61,9 @@ public class Console_Chat {
                     //TODO impliment cmd
                     String[] cmd_chunks = input.split(" ");
                     if (cmd_chunks.length == 3 ){                 // create thread
-                        ConversationThread conversationThread = new ConversationThread(cmd_chunks[1],"currentUser",cmd_chunks[2]);
-                        threads.add(conversationThread);
-                        conversationThread.open();
+                        HMI_ConversationThread HMIConversationThread = new HMI_ConversationThread(cmd_chunks[1],"currentUser",cmd_chunks[2]);
+                        threads.add(HMIConversationThread);
+                        HMIConversationThread.open();
 
                     }else {
                         System.out.println("wrong arguments");
@@ -80,7 +80,7 @@ public class Console_Chat {
                         argThreadTopic = cmd_chunks[1];
                         boolean threadFound = false;
                         while(it.hasNext()){
-                            ConversationThread con = it.next();
+                            HMI_ConversationThread con = it.next();
                             if(con.getName().equals(argThreadTopic)){
                                 threadFound = true;
                                 con.open();

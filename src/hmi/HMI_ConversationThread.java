@@ -3,7 +3,10 @@ package hmi;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class ConversationThread {
+/*
+*   this is the Main Container of a Conversation History between 2 or more users
+*/
+public class HMI_ConversationThread {
 
 
     //Fields
@@ -24,7 +27,7 @@ public class ConversationThread {
     }
 
     //Constructor
-    public ConversationThread(String topic, String currentUser, String user){
+    public HMI_ConversationThread(String topic, String currentUser, String user){
         membersIDs.add(currentUser);
         membersIDs.add(user);
         this.name = topic;
