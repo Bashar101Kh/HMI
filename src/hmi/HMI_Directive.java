@@ -3,13 +3,7 @@ import org.json.*;
 
 /**
  * API Commands
- *  this commands in the list are to be sent with each ComMessage
- *  to specify to the other Groups what we are requesting
- *  0x10    send
- *  0x20    Sync
- *  0x30    get
- *  0x40    userLoggedIn
- *  0x50    newUser_registered
+ * https://gitlab.ei.htwg-konstanz.de/akrupp/20ws-sysarch/-/wikis/ipc_message.md
  */
 
 public class HMI_Directive {
