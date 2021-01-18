@@ -143,6 +143,7 @@ public class Console_Chat {
         }
     }
 
+    //Register a username and generate a UUID for the user. TODO "spellchecking" for illegal symbols (i.e. spacebar)
     public void registerUser(){
 
         System.out.println("Please enter your desired username");

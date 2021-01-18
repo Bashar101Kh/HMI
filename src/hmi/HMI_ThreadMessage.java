@@ -10,7 +10,7 @@ import org.json.*;
 public class HMI_ThreadMessage {
 
     //Fields
-    private HMI_User sender;
+    private HMI_User sender;   //jo851hil: TODO Ensure that all ThreadMessage references to SenderID and SenderName are references to the HMI_User object
     private String msgUuid;
     private String senderID;
     private String senderName; //jo851hil: currently for test purposes only TODO export senderName to HMI_User class; Implement functionality to share & store HMI_User class
