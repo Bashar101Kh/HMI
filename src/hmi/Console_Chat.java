@@ -16,8 +16,7 @@ public class Console_Chat {
     }
     //Fields
     private boolean run ;
-    private String currentUserID;
-    private String currentUserName;
+    private User currentUser ;
     private ArrayList<HMI_ConversationThread> threads = new ArrayList<HMI_ConversationThread>();
     Iterator<HMI_ConversationThread> it = threads.iterator();
 
@@ -132,9 +131,7 @@ public class Console_Chat {
         Scanner scanner = new Scanner(System.in);
 
         //check if input correct and in limitations
-        this.currentUserName = scanner.nextLine();
-        this.currentUserID  = HMI_utilities.generateUUID();
-
+        currentUser = new User(scanner.nextLine());
         //functionality to send data to STOR via Stream/Socket of Daemon-process
     }
     public void UserInit(){
