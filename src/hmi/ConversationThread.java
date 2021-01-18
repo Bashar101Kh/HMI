@@ -1,12 +1,14 @@
 package hmi;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class ConversationThread {
 
 
     //Fields
     private String name ;
+    private UUID uuid;
     private ArrayList<String> membersIDs = new ArrayList<String>();
     private ArrayList<HMI_ThreadMessage> msgHistory = new ArrayList<HMI_ThreadMessage>();
 
