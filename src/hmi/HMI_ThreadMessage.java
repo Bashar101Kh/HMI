@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import org.json.*;
 
-public class ThreadMessage {
+public class HMI_ThreadMessage {
 
     //Fields
     private String msgUuid;
@@ -26,7 +26,7 @@ public class ThreadMessage {
     private byte[] content;
 
     //Constructor
-    public ThreadMessage(String argMsg, String argThreadID, String argThreadMessage, String argSenderID, String argSenderName){
+    public HMI_ThreadMessage(String argMsg, String argThreadID, String argThreadMessage, String argSenderID, String argSenderName){
 
         msgUuid = HMI_utilities.generateUUID();
         senderID = argSenderID;
@@ -110,7 +110,7 @@ public class ThreadMessage {
     }
 
     //TODO Message an Directive übergeben, ggf. methodenaufruf um an socket zu übergeben, tbd
-    public void send(ThreadMessage threadMessage){
+    public void send(HMI_ThreadMessage HMIThreadMessage){
 
     }
 
@@ -182,13 +182,13 @@ public class ThreadMessage {
     }
 
     //Generate  byte[] data block to hand over to the Directive
-    public byte[] messageToByte(ThreadMessage threadMessage){
+    public byte[] messageToByte(HMI_ThreadMessage HMIThreadMessage){
 
         byte[] json_data;
         byte[] message_data;
 
-        json_data = jsonToByte(threadMessage.header);
-        message_data = threadMessage.content;
+        json_data = jsonToByte(HMIThreadMessage.header);
+        message_data = HMIThreadMessage.content;
 
         byte[] combinedByteArray = new byte[json_data.length + message_data.length];
         ByteBuffer buff = ByteBuffer.wrap(combinedByteArray);

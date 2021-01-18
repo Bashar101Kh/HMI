@@ -8,7 +8,7 @@ public class ConversationThread {
     //Fields
     private String name ;
     private ArrayList<String> membersIDs = new ArrayList<String>();
-    private ArrayList<ThreadMessage> msgHistory = new ArrayList<ThreadMessage>();
+    private ArrayList<HMI_ThreadMessage> msgHistory = new ArrayList<HMI_ThreadMessage>();
 
     private String ui ;
 

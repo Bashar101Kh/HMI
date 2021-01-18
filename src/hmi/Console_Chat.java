@@ -22,8 +22,8 @@ public class Console_Chat {
     Iterator<ConversationThread> it = threads.iterator();
 
     //jo851hil TODO
-    ThreadMessage sendThreadMessage;
-    ThreadMessage receiveThreadMessage;
+    HMI_ThreadMessage sendHMIThreadMessage;
+    HMI_ThreadMessage receiveHMIThreadMessage;
 
     private String cmdHelp = "The following commands are available:" +
                              "\n-help : list all commands" +
